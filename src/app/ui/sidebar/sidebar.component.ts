@@ -49,17 +49,17 @@ export class AppSidebar {
         routerLink: '/profile',
         visible: true
       },
-      {
-        label: 'Student Dashboard',
-        icon: 'pi pi-book',
-        routerLink: '/student',
-        visible: this.authService.currentUserValue?.role === 'student'
-      },
-      {
+          {
         label: 'Professor Dashboard',
         icon: 'pi pi-users',
         routerLink: '/professor',
         visible: this.authService.currentUserValue?.role === 'professor'
+      },
+      {
+        label: 'Courses',
+        icon: 'pi pi-users',
+        routerLink: '/courses',
+        visible: this.authService.currentUserValue?.role === 'professor' || this.authService.currentUserValue?.role === 'admin'
       },
       {
         label: 'Admin Dashboard',
