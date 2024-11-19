@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { RippleModule } from 'primeng/ripple';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { AppSidebar } from '../sidebar/sidebar.component';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-layout',
@@ -11,6 +12,7 @@ import { AppSidebar } from '../sidebar/sidebar.component';
     CommonModule,
     AppSidebar,
     RippleModule,
+    RouterOutlet,
     NavbarComponent
   ],
   templateUrl: './layout.component.html',

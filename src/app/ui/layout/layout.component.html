@@ -1,13 +1,13 @@
-<div class="flex h-screen bg-gray-50">
-    <!-- Sidebar -->
-    <app-sidebar [sidebarVisible]="sidebarVisible"></app-sidebar>
-  
-    <!-- Main Content -->
-    <div class="flex-1 flex-col transition-all duration-300">
-      <app-navbar [(sidebarVisible)]="sidebarVisible"></app-navbar>
-  
-      <div class="flex-1">
-        <ng-content></ng-content>
-      </div>
+<div class="flex h-screen bg-gray-100">
+  <!-- Sidebar -->
+  <app-sidebar [sidebarVisible]="sidebarVisible"></app-sidebar>
+
+  <!-- Main Content -->
+  <div class="flex-1 flex-col transition-all duration-300">
+    <app-navbar [(sidebarVisible)]="sidebarVisible"></app-navbar>
+
+    <div class="flex-1 p-4 ">
+      <router-outlet></router-outlet>
     </div>
   </div>
+</div>
