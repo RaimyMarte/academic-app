@@ -6,8 +6,8 @@ import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.compo
 import { AuthGuard } from './auth/auth.guard';
 import { ProfileComponent } from './profile/profile.component';
 import { LayoutComponent } from './ui/layout/layout.component';
-import { CoursesListComponent } from './courses/courses-list/courses-list.component';
 import { ProfessorDashboardComponent } from './professor-dashboard/professor-dashboard.component';
+import { SubjectsListComponent } from './subjects/subjects-list/subjects-list.component';
 
 export const routes: Routes = [
   {
@@ -31,8 +31,8 @@ export const routes: Routes = [
         data: { roles: ['professor'] }
       },
       {
-        path: 'courses',
-        component: CoursesListComponent,
+        path: 'subjects',
+        component: SubjectsListComponent,
         canActivate: [AuthGuard],
         data: { roles: ['professor', 'admin'] }
       },

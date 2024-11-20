@@ -21,14 +21,14 @@ import { ProductService } from '../../../services/productservice';
 import { Product } from '../../../types/product';
 
 @Component({
-  selector: 'app-courses-list',
+  selector: 'app-subjects-list',
   standalone: true,
   imports: [TableModule, DialogModule, RippleModule, ButtonModule, ToastModule, ToolbarModule, ConfirmDialogModule, InputTextModule, InputTextareaModule, CommonModule, FileUploadModule, DropdownModule, TagModule, RadioButtonModule, RatingModule, InputTextModule, FormsModule, InputNumberModule],
   providers: [MessageService, ConfirmationService, ProductService],
-  templateUrl: './courses-list.component.html',
-  styleUrl: './courses-list.component.css',
+  templateUrl: './subjects-list.component.html',
+  styleUrl: './subjects-list.component.css',
 })
-export class CoursesListComponent implements OnInit {
+export class SubjectsListComponent implements OnInit {
   productDialog: boolean = false;
 
   products!: Product[];
