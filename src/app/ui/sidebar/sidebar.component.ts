@@ -56,9 +56,9 @@ export class AppSidebar {
         visible: this.authService.currentUserValue?.role === 'professor'
       },
       {
-        label: 'Courses',
+        label: 'Subjects',
         icon: 'pi pi-users',
-        routerLink: '/courses',
+        routerLink: '/subjects',
         visible: this.authService.currentUserValue?.role === 'professor' || this.authService.currentUserValue?.role === 'admin'
       },
       {

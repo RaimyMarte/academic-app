@@ -17,35 +17,34 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { RatingModule } from 'primeng/rating';
 import { FormsModule } from '@angular/forms';
 import { InputNumberModule } from 'primeng/inputnumber';
-import { ProductService } from '../../../services/productservice';
-import { Product } from '../../../types/product';
+import { SubjectService } from '../../../services/subjectservice';
+import { Subject } from '../../../types/subject';
 
 @Component({
   selector: 'app-subjects-list',
   standalone: true,
   imports: [TableModule, DialogModule, RippleModule, ButtonModule, ToastModule, ToolbarModule, ConfirmDialogModule, InputTextModule, InputTextareaModule, CommonModule, FileUploadModule, DropdownModule, TagModule, RadioButtonModule, RatingModule, InputTextModule, FormsModule, InputNumberModule],
-  providers: [MessageService, ConfirmationService, ProductService],
+  providers: [MessageService, ConfirmationService, SubjectService],
   templateUrl: './subjects-list.component.html',
   styleUrl: './subjects-list.component.css',
 })
 export class SubjectsListComponent implements OnInit {
-  productDialog: boolean = false;
+  subjectDialog: boolean = false;
 
-  products!: Product[];
+  subjects!: Partial<Subject>[];
+  subject!: Partial<Subject>;
 
-  product!: Product;
-
-  selectedProducts!: Product[] | null;
+  selectedSubjects!: Subject[] | null;
 
   submitted: boolean = false;
 
   statuses!: any[];
 
-  constructor(private productService: ProductService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
+  constructor(private subjectService: SubjectService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
 
   ngOnInit() {
-    this.productService.getProducts().then((data) => (this.products = data));
-console.log('klk')
+    this.subjectService.getSubjects().then((data) => (this.subjects = data));
+
     this.statuses = [
       { label: 'INSTOCK', value: 'instock' },
       { label: 'LOWSTOCK', value: 'lowstock' },
@@ -54,71 +53,73 @@ console.log('klk')
   }
 
   openNew() {
-    this.product = {};
+    this.subject = {};
     this.submitted = false;
-    this.productDialog = true;
+    this.subjectDialog = true;
   }
 
-  deleteSelectedProducts() {
+  deleteSelectedSubjects() {
     this.confirmationService.confirm({
-      message: 'Are you sure you want to delete the selected products?',
+      message: 'Are you sure you want to delete the selected Subjects?',
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.products = this.products.filter((val) => !this.selectedProducts?.includes(val));
-        this.selectedProducts = null;
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000 });
+        this.subjects = this.subjects.filter((subject) => 
+          !this.selectedSubjects?.some((selected) => selected.Id && selected.Id === subject.Id)
+        );
+        
+        this.selectedSubjects = null;
+        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Subjects Deleted', life: 3000 });
       }
     });
   }
 
-  editProduct(product: Product) {
-    this.product = { ...product };
-    this.productDialog = true;
+  editSubject(subject: Subject) {
+    this.subject = { ...subject };
+    this.subjectDialog = true;
   }
 
-  deleteProduct(product: Product) {
+  deleteSubject(Subject: Subject) {
     this.confirmationService.confirm({
-      message: 'Are you sure you want to delete ' + product.name + '?',
+      message: 'Are you sure you want to delete ' + Subject.Name + '?',
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.products = this.products.filter((val) => val.id !== product.id);
-        this.product = {};
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
+        this.subjects = this.subjects.filter((val) => val.Id !== Subject.Id);
+        this.subject = {};
+        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Subject Deleted', life: 3000 });
       }
     });
   }
 
   hideDialog() {
-    this.productDialog = false;
+    this.subjectDialog = false;
     this.submitted = false;
   }
 
-  saveProduct() {
+  saveSubject() {
     this.submitted = true;
 
-    if (this.product.name?.trim()) {
-      if (this.product.id) {
-        this.products[this.findIndexById(this.product.id)] = this.product;
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
+    if (this.subject.Name?.trim()) {
+      if (this.subject.Id) {
+        this.subjects[this.findIndexById(this.subject.Id)] = this.subject;
+        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Subject Updated', life: 3000 });
       } else {
-        this.product.id = this.createId();
-        this.product.image = 'product-placeholder.svg';
-        this.products.push(this.product);
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
+        this.subject.Id = this.createId();
+        this.subjects.push(this.subject);
+        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Subject Created', life: 3000 });
       }
 
-      this.products = [...this.products];
-      this.productDialog = false;
-      this.product = {};
+      this.subjects = [...this.subjects];
+      this.subjectDialog = false;
+      this.subject = {};
     }
   }
 
   findIndexById(id: string): number {
     let index = -1;
-    for (let i = 0; i < this.products.length; i++) {
-      if (this.products[i].id === id) {
+    for (let i = 0; i < this.subjects.length; i++) {
+      if (this.subjects[i].Id === id) {
         index = i;
         break;
       }
