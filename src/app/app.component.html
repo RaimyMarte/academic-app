@@ -1,2 +1,5 @@
 <router-outlet></router-outlet>
 <p-toast></p-toast>
+
+<p-progressSpinner *ngIf="apiService.isLoading"
+    class="fixed inset-0 flex items-center justify-center z-50 bg-opacity-50 bg-gray-800 transition-opacity duration-300"></p-progressSpinner>

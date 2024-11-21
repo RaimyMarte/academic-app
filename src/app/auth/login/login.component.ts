@@ -6,7 +6,7 @@ import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../../../services/auth/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -33,10 +33,10 @@ export class LoginComponent {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
-  onSubmit() {
+  async onSubmit() {
     if (this.username && this.password) {
+      const user = await this.authService.login(this.username, this.password);
 
-      const user = this.authService.login(this.username, this.password);
       if (user) {
         this.router.navigate([this.returnUrl]);
       }

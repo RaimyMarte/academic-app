@@ -8,7 +8,8 @@ import { CardModule } from 'primeng/card';
 import { DividerModule } from 'primeng/divider';
 import { MenuModule } from 'primeng/menu';
 import { RippleModule } from 'primeng/ripple';
-import { AuthService } from '../../auth/auth.service';
+import { AuthService } from '../../../services/auth/auth.service';
+import { User } from '../../../types/user';
 
 @Component({
   selector: 'app-sidebar',
@@ -30,8 +31,12 @@ export class AppSidebar {
   @Input() sidebarVisible: boolean = true;
 
   menuItems: MenuItem[] = [];
+  currentUser: User | null = null;
 
-  constructor(public authService: AuthService) {
+  constructor(public authService: AuthService) { }
+
+  ngOnInit() {
+    this.currentUser = this.authService.currentUserValue;
     this.initializeMenuItems();
   }
 
@@ -53,19 +58,19 @@ export class AppSidebar {
         label: 'Professor Dashboard',
         icon: 'pi pi-users',
         routerLink: '/professor',
-        visible: this.authService.currentUserValue?.role === 'professor'
+        visible: this.currentUser?.UserRoleId === 2
       },
       {
         label: 'Subjects',
         icon: 'pi pi-users',
         routerLink: '/subjects',
-        visible: this.authService.currentUserValue?.role === 'professor' || this.authService.currentUserValue?.role === 'admin'
+        visible: this.currentUser?.UserRoleId === 2 || this.currentUser?.UserRoleId === 1
       },
       {
         label: 'Admin Dashboard',
         icon: 'pi pi-cog',
         routerLink: '/admin',
-        visible: this.authService.currentUserValue?.role === 'admin'
+        visible: this.currentUser?.UserRoleId === 1
       }
     ];
   }

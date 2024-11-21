@@ -42,14 +42,8 @@ export class SubjectsListComponent implements OnInit {
 
   constructor(private subjectService: SubjectService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
 
-  ngOnInit() {
-    this.subjectService.getSubjects().then((data) => (this.subjects = data));
-
-    this.statuses = [
-      { label: 'INSTOCK', value: 'instock' },
-      { label: 'LOWSTOCK', value: 'lowstock' },
-      { label: 'OUTOFSTOCK', value: 'outofstock' }
-    ];
+  async ngOnInit() {
+    this.subjects = await this.subjectService.getSubjects();
   }
 
   openNew() {

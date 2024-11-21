@@ -5,7 +5,7 @@ import { ButtonModule } from 'primeng/button';
 import { MenubarModule } from 'primeng/menubar';
 import { TooltipModule } from 'primeng/tooltip';
 import { Router } from '@angular/router';
-import { AuthService } from '../../auth/auth.service';
+import { AuthService } from '../../../services/auth/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -30,10 +30,9 @@ export class NavbarComponent {
   ) { }
 
   toggleSidebar() {
-    this.sidebarVisible = !this.sidebarVisible;  // Toggle the sidebar visibility
-    this.sidebarVisibleChange.emit(this.sidebarVisible);  // Emit the change to the parent component
+    this.sidebarVisible = !this.sidebarVisible;
+    this.sidebarVisibleChange.emit(this.sidebarVisible);
   }
-
 
   logout() {
     this.authService.logout();
