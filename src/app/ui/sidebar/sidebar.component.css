@@ -1,4 +1,3 @@
-/* Custom scrollbar styles */
 .scrollbar-thin::-webkit-scrollbar {
   width: 6px;
 }
@@ -12,7 +11,7 @@
   border-radius: 20px;
 }
 
-/* Sidebar item styles */
+
 .sidebar-item {
   @apply flex items-center no-underline hover:no-underline p-3 rounded-lg text-gray-300 hover:bg-gray-800 hover:text-white transition-all duration-200 ease-in-out;
 }
@@ -29,12 +28,10 @@
   @apply text-sm font-medium;
 }
 
-/* Active item styles */
 .sidebar-item.active {
   @apply bg-blue-600 text-white shadow-lg;
 }
 
-/* Hover effect for sidebar items */
 .sidebar-item:hover {
   @apply transform scale-105 shadow-md;
 }
