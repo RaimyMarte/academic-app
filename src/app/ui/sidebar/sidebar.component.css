@@ -1,8 +1,41 @@
-:host ::ng-deep .p-card {
-  background: transparent;
-  box-shadow: none;
+/* Custom scrollbar styles */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
 }
 
-:host ::ng-deep .p-card-content {
-  padding: 0;
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: #1f2937;
 }
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: #4b5563;
+  border-radius: 20px;
+}
+
+/* Sidebar item styles */
+.sidebar-item {
+  @apply flex items-center no-underline hover:no-underline p-3 rounded-lg text-gray-300 hover:bg-gray-800 hover:text-white transition-all duration-200 ease-in-out;
+}
+
+.sidebar-item-content {
+  @apply flex items-center space-x-3;
+}
+
+.sidebar-icon {
+  @apply text-xl;
+}
+
+.sidebar-label {
+  @apply text-sm font-medium;
+}
+
+/* Active item styles */
+.sidebar-item.active {
+  @apply bg-blue-600 text-white shadow-lg;
+}
+
+/* Hover effect for sidebar items */
+.sidebar-item:hover {
+  @apply transform scale-105 shadow-md;
+}
+

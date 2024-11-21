@@ -49,7 +49,7 @@ export class AppSidebar {
         routerLink: '/profile',
         visible: true
       },
-          {
+      {
         label: 'Professor Dashboard',
         icon: 'pi pi-users',
         routerLink: '/professor',
