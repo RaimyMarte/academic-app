@@ -29,19 +29,19 @@ export const routes: Routes = [
         path: 'professor',
         component: ProfessorDashboardComponent,
         canActivate: [AuthGuard],
-        data: { roles: ['professor'] }
+        // data: { roles: ['professor'] }
       },
       {
         path: 'subjects',
         component: SubjectsListComponent,
         canActivate: [AuthGuard],
-        data: { roles: ['professor', 'admin'] }
+        // data: { roles: ['professor', 'admin'] }
       },
       {
         path: 'admin',
         component: AdminDashboardComponent,
         canActivate: [AuthGuard],
-        data: { roles: ['admin'] }
+        // data: { roles: ['admin'] }
       },
       // { path: '**', redirectTo: '' }
     ]

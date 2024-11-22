@@ -3,6 +3,6 @@ export interface StudentSubjectCross {
   SignatureId: string;
   StudentId: string;
   CreatedDate: Date;
-  CreatedBy: string;
-  Grade: number;
+  CreatedBy: string | null;
+  Grade: number | null;
 }
