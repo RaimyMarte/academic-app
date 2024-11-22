@@ -30,9 +30,14 @@ export class AuthService {
   }
 
   async checkAuth(): Promise<User | null> {
+    const token = this.cookieService.get('token');
+
+    if(!token)
+      return null
+
     if (!this.authChecked) {
       try {
-        const response = await this.apiService.get('/auth/checkauth', this.authHeader());
+        const response = await this.apiService.get('/auth/check_auth', this.authHeader());
         const user = response?.data?.user as User;
         this.currentUserSubject.next(user);
         this.authChecked = true;
@@ -48,13 +53,13 @@ export class AuthService {
 
   async login(username: string, password: string) {
     const body = {
-      UserName: username,
+      UserNameOrEmail: username,
       Password: password,
     };
 
     const response = await this.apiService.post('/auth/login', body);
     const user = response?.data?.user as User
-    const newToken = response?.data?.Token as string
+    const newToken = response?.data?.token as string
 
     this.cookieService.set('token', newToken, 30);
     this.currentUserSubject.next(user);
