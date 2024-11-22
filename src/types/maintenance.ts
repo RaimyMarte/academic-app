@@ -1,9 +1,9 @@
 export interface Maintenance {
     Name: string;
     Enabled: boolean;
-    CreatedBy: string;
+    CreatedBy: string | null;
     CreatedDate: Date;
-    LastUpdatedBy: string;
-    LastUpdatedDate: Date;
+    LastUpdatedBy: string | null;
+    LastUpdatedDate: Date | null;
   }
   
