@@ -17,8 +17,8 @@ import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
-import { Subject } from '../../../types/subject';
-import { SubjectService } from '../../../services/subject/subject.service';
+import { Subject } from '../../../../types/subject';
+import { SubjectService } from '../../../../services/subject/subject.service';
 
 @Component({
   selector: 'app-subjects-list',

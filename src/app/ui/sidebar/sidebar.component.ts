@@ -67,6 +67,12 @@ export class AppSidebar {
         visible: this.currentUser?.UserRoleId === 2 || this.currentUser?.UserRoleId === 1
       },
       {
+        label: 'Students',
+        icon: 'pi pi-users',
+        routerLink: '/students',
+        visible: this.currentUser?.UserRoleId === 1
+      },
+      {
         label: 'Admin Dashboard',
         icon: 'pi pi-cog',
         routerLink: '/admin',

@@ -6,9 +6,10 @@ import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.compo
 import { ProfileComponent } from './pages/user/profile/profile.component';
 import { LayoutComponent } from './ui/layout/layout.component';
 import { ProfessorDashboardComponent } from './pages/professor-dashboard/professor-dashboard.component';
-import { SubjectsListComponent } from './pages/subjects-list/subjects-list.component';
+import { SubjectsListComponent } from './pages/subjects/subjects-list/subjects-list.component';
 import { AuthGuard } from '../services/auth/auth.guard';
 import { NonAuthGuard } from './non-auth.guard';
+import { StudentListComponent } from './pages/student/student-list/student-list.component';
 
 export const routes: Routes = [
   {
@@ -34,6 +35,12 @@ export const routes: Routes = [
       {
         path: 'subjects',
         component: SubjectsListComponent,
+        canActivate: [AuthGuard],
+        // data: { roles: ['professor', 'admin'] }
+      },
+      {
+        path: 'students',
+        component: StudentListComponent,
         canActivate: [AuthGuard],
         // data: { roles: ['professor', 'admin'] }
       },
