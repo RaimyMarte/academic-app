@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
-import { LoginComponent } from './auth/login/login.component';
+import { LoginComponent } from './pages/auth/login/login.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
-import { ProfileComponent } from './profile/profile.component';
+import { ProfileComponent } from './pages/user/profile/profile.component';
 import { LayoutComponent } from './ui/layout/layout.component';
-import { ProfessorDashboardComponent } from './professor-dashboard/professor-dashboard.component';
-import { SubjectsListComponent } from './subjects/subjects-list/subjects-list.component';
+import { ProfessorDashboardComponent } from './pages/professor-dashboard/professor-dashboard.component';
+import { SubjectsListComponent } from './pages/subjects-list/subjects-list.component';
 import { AuthGuard } from '../services/auth/auth.guard';
 import { NonAuthGuard } from './non-auth.guard';
 

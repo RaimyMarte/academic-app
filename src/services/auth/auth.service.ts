@@ -73,9 +73,4 @@ export class AuthService {
     this.authChecked = false;
     this.router.navigate(['/login']);
   }
-
-  // updateCurrentUser(user: any) {
-  //   localStorage.setItem('currentUser', JSON.stringify(user));
-  //   this.currentUser = user;
-  // }
 }

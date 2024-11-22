@@ -63,8 +63,8 @@ export class ApiService {
         return this.request('POST', endpoint, body, headers);
     }
 
-    async put(endpoint: string, body: any, headers?: AxiosRequestConfig['headers']) {
-        return this.request('PUT', endpoint, body, headers);
+    async patch(endpoint: string, body: any, headers?: AxiosRequestConfig['headers']) {
+        return this.request('PATCH', endpoint, body, headers);
     }
 
     async delete(endpoint: string, headers?: AxiosRequestConfig['headers']) {
