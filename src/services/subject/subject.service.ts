@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Subject } from '../../types/subject';
-import { ApiService } from '../api.service';
+import { ApiService } from '../api/api.service';
 import { AuthService } from '../auth/auth.service';
+import { PaginationQuery } from '../../types/paginationQuery';
 
 interface SubjectBody {
     Code?: string | null;
@@ -24,11 +25,14 @@ export class SubjectService {
         private authService: AuthService
     ) { }
 
-    async getSubjects() {
-        const response = await this.apiService.get('/subject_get_all', this.authService.authHeader());
+    async getSubjects({ currentPage, currentPageSize, search }: PaginationQuery) {
+        const response = await this.apiService.get(`/subject_get_all?page=${currentPage}&pageSize=${currentPageSize}&search=${search}`, this.authService.authHeader());
         const subjects = response?.data as Subject[];
-     
-        return subjects;
+
+        return {
+            subjects,
+            total: response?.total
+        };
     }
 
     async createSubject(body: SubjectBody) {

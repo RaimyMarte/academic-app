@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Student } from '../../types/student';
-import { ApiService } from '../api.service';
+import { ApiService } from '../api/api.service';
 import { AuthService } from '../auth/auth.service';
 
 interface StudentBody {

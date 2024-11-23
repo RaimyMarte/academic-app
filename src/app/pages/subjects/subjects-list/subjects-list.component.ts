@@ -19,6 +19,11 @@ import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
 import { Subject } from '../../../../types/subject';
 import { SubjectService } from '../../../../services/subject/subject.service';
+import { PaginationService } from '../../../../services/ui/pagination.service';
+import { PaginationQuery } from '../../../../types/paginationQuery';
+import { getPageChangeDetails } from '../../../../utils/getPageChangeDetails';
+import { PageChangeEvent } from '../../../../types/pageChangeEvent';
+import { SearchService } from '../../../../services/ui/seach.service';
 
 @Component({
   selector: 'app-subjects-list',
@@ -33,17 +38,52 @@ export class SubjectsListComponent implements OnInit {
 
   subjects!: Partial<Subject>[];
   subject!: Partial<Subject>;
-
   selectedSubjects!: Subject[] | null;
+
+  totalSubjects: number = 0;
+  searchTerm: string = ''
 
   submitted: boolean = false;
 
   statuses!: any[];
 
-  constructor(private subjectService: SubjectService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
+  constructor(private subjectService: SubjectService, private messageService: MessageService, private confirmationService: ConfirmationService, public paginationService: PaginationService, private searchService: SearchService) { }
 
   async ngOnInit() {
-    this.subjects = await this.subjectService.getSubjects();
+    const currentPage = this.paginationService.getCurrentPage()
+    const rowsPerPage = this.paginationService.getItemsPerPage()
+    this.searchTerm = this.searchService.getSearchTerm()
+
+    this.loadSubjects({ currentPage: currentPage, currentPageSize: rowsPerPage, search: this.searchTerm });
+  }
+
+  async loadSubjects({ currentPage, currentPageSize, search }: PaginationQuery) {
+    const { subjects, total: totalSubjects } = await this.subjectService.getSubjects({ currentPage, currentPageSize, search });
+
+    this.subjects = subjects
+    this.totalSubjects = totalSubjects;
+  }
+
+  paginate(event: PageChangeEvent) {
+    const { currentPage, rowsPerPage } = getPageChangeDetails(event);
+
+    this.paginationService.onPageEvent(currentPage, rowsPerPage);
+    this.loadSubjects({ currentPage, currentPageSize: rowsPerPage, search: this.searchTerm });
+  }
+
+  onSearch() {
+    this.searchService.onSearchEvent(this.searchTerm);
+    const rowsPerPage = this.paginationService.getItemsPerPage();
+
+    this.loadSubjects({ currentPage: 1, currentPageSize: rowsPerPage, search: this.searchTerm });
+  }
+
+  onResetSearch() {
+    this.searchService.onResetSearch();
+    const rowsPerPage = this.paginationService.getItemsPerPage();
+    this.searchTerm = ''
+
+    this.loadSubjects({ currentPage: 1, currentPageSize: rowsPerPage, search: '' });
   }
 
   openNew() {

@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ToastModule } from 'primeng/toast';
-import { ApiService } from '../services/api.service';
+import { ApiService } from '../services/api/api.service';
 
 
 @Component({

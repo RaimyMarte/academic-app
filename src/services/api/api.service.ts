@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import axios, { AxiosRequestConfig } from 'axios';
-import { ErrorResponseMessageService } from '../utils/error-response-message';
-import { SuccessResponseMessageService } from '../utils/success-response-message';
-import { environment } from '../environments/environment.development';
+import { ErrorResponseMessageService } from '../../utils/error-response-message';
+import { SuccessResponseMessageService } from '../../utils/success-response-message';
+import { environment } from '../../environments/environment.development';
 
 
 @Injectable({
@@ -45,7 +45,8 @@ export class ApiService {
                 throw new Error(responseData?.message || 'Something went wrong');
             }
 
-            this.successResponseMessageService.showSuccess(responseData);
+            if (method != 'GET')
+                this.successResponseMessageService.showSuccess(responseData);
 
             return responseData;
         } catch (error: any) {
