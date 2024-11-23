@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -23,22 +23,18 @@ export class LoginComponent {
   rememberMe: boolean = false;
 
   constructor(
-    private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
     private messageService: MessageService
   ) { }
 
-  ngOnInit() {
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-  }
 
   async onSubmit() {
     if (this.username && this.password) {
       const user = await this.authService.login(this.username, this.password);
 
       if (user) {
-        this.router.navigate([this.returnUrl]);
+        this.router.navigate(['/']);
       }
     } else {
       this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Please enter both username and password' });

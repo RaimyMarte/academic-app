@@ -22,6 +22,7 @@ import { AuthService } from '../../../services/auth/auth.service';
 })
 export class NavbarComponent {
   @Input() sidebarVisible: boolean = true;
+  @Input() isMobile: boolean = false;
   @Output() sidebarVisibleChange = new EventEmitter<boolean>();
 
   constructor(

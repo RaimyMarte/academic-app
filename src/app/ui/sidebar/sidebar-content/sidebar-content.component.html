@@ -1,0 +1,35 @@
+<div class="h-full flex flex-col">
+    <div class="p-6 mb-6 flex items-center justify-center">
+      <div class="flex items-center space-x-3">
+        <div class="relative w-12 h-12 bg-blue-500 rounded-full shadow-lg overflow-hidden">
+          <img src="/assets/logo.png" alt="Logo" class="w-full h-full object-cover">
+        </div>
+        <div *ngIf="sidebarVisible" class="flex flex-col">
+          <h2 class="text-2xl font-bold m-0 text-white tracking-tight">
+            EduTrack
+          </h2>
+          <span class="text-xs text-blue-300 tracking-wide">
+            Learning Management
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <nav class="py-4 flex-grow overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800">
+      <ul class="space-y-1 px-2">
+        <ng-container *ngFor="let item of menuItems">
+          <li *ngIf="item.visible">
+            <a [routerLink]="item.routerLink" routerLinkActive="bg-blue-600 text-white shadow-lg" 
+              [routerLinkActiveOptions]="{exact: item.routerLink === '/'}" class="sidebar-item group" [ngClass]="{'justify-center': !sidebarVisible}" pRipple>
+              <div class="sidebar-item-content">
+                <i [class]="item.icon + ' sidebar-icon'"></i>
+                <span *ngIf="sidebarVisible" class="sidebar-label">
+                  {{ item.label }}
+                </span>
+              </div>
+            </a>
+          </li>
+        </ng-container>
+      </ul>
+    </nav>
+  </div>

@@ -8,11 +8,11 @@ import { CardModule } from 'primeng/card';
 import { DividerModule } from 'primeng/divider';
 import { MenuModule } from 'primeng/menu';
 import { RippleModule } from 'primeng/ripple';
-import { AuthService } from '../../../services/auth/auth.service';
-import { User } from '../../../types/user';
+import { AuthService } from '../../../../services/auth/auth.service';
+import { User } from '../../../../types/user';
 
 @Component({
-  selector: 'app-sidebar',
+  selector: 'sidebar-content',
   standalone: true,
   imports: [
     CommonModule,
@@ -24,12 +24,12 @@ import { User } from '../../../types/user';
     AvatarModule,
     RippleModule
   ],
-  templateUrl: './sidebar.component.html',
-  styleUrl: './sidebar.component.css'
+  templateUrl: './sidebar-content.component.html',
+  styleUrl: './sidebar-content.component.css'
 })
-export class AppSidebar {
+export class SidebarContentComponent {
   @Input() sidebarVisible: boolean = true;
-
+  
   menuItems: MenuItem[] = [];
   currentUser: User | null = null;
 

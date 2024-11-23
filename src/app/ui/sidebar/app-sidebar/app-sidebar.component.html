@@ -1,0 +1,6 @@
+<div *ngIf="isMobile; else desktopSidebar">
+      <app-sidebar-mobile [sidebarVisible]="sidebarVisible"></app-sidebar-mobile>
+</div>
+<ng-template #desktopSidebar>
+      <app-sidebar-desktop [sidebarVisible]="sidebarVisible"></app-sidebar-desktop>
+</ng-template>

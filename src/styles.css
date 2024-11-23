@@ -37,3 +37,52 @@ body {
 .p-component {
   font-family: var(--font-family);
 }
+
+
+/* styles.css or component-specific styles */
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  color: rgb(209 213 219);
+  border-radius: 0.5rem;
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
+}
+
+.sidebar-item:hover {
+  background-color: rgb(31 41 55);
+}
+
+.sidebar-item-content {
+  display: flex;
+  align-items: center;
+}
+
+.sidebar-icon {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
+.sidebar-label {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  margin-left: 0.75rem;
+}
+
+/* Customizing p-sidebar for mobile to look like desktop */
+.custom-mobile-sidebar .p-sidebar-content {
+  padding: 0; /* Remove padding from the PrimeNG component */
+  background-color: #1f2937; /* Match desktop sidebar background */
+  border-right: 1px solid #374151; /* Match desktop border color */
+}
+
+.custom-mobile-sidebar .p-sidebar-header {
+  display: none; /* Hide default header (if not needed) */
+}
+
+.custom-mobile-sidebar .p-sidebar-mask {
+  background-color: rgba(0, 0, 0, 0.6); /* Slightly darken the modal background */
+}
