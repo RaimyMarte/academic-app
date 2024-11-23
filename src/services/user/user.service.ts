@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { User } from '../../types/user';
-import { ApiService } from '../api.service';
 import { AuthService } from '../auth/auth.service';
+import { ApiService } from '../api/api.service';
 
 interface CreateUserBody {
     Email: string
@@ -37,6 +37,12 @@ export class UserService {
         const response = await this.apiService.get('/get_users', this.authService.authHeader());
         const users = response?.data as User[];
         return users;
+    }
+
+    async getProfessors() {
+        const response = await this.apiService.get('/get_professors', this.authService.authHeader());
+        const professors = response?.data as User[];
+        return professors;
     }
 
     async getUserById(userId: string) {

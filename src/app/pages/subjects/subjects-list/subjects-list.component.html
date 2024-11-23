@@ -1,151 +1,204 @@
 <div class="min-h-screen bg-gray-50 p-6">
-    <p-toast></p-toast>
+  <p-toast></p-toast>
 
-    <!-- Header Section -->
-    <div class="mb-8">
-        <h1 class="text-3xl font-bold text-gray-800 mb-2">Subject Management</h1>
-        <p class="text-gray-600">Manage and organize your academic subjects</p>
-    </div>
+  <!-- Header Section -->
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold text-gray-800 mb-2">Subject Management</h1>
+    <p class="text-gray-600">Manage and organize your academic subjects</p>
+  </div>
 
-    <!-- Toolbar -->
-    <p-toolbar styleClass="mb-6 shadow-lg bg-white rounded-lg border-none">
-        <ng-template pTemplate="left">
-            <p-button severity="success" label="New Subject" icon="pi pi-plus" class="mr-4 shadow-md hover:shadow-lg"
-                (onClick)="openNew()"></p-button>
-        </ng-template>
-    </p-toolbar>
+  <!-- Toolbar -->
+  <p-toolbar styleClass="mb-6 shadow-lg bg-white rounded-lg border-none">
+    <ng-template pTemplate="left">
+      <p-button severity="primary" label="New Subject" icon="pi pi-plus" class="mr-4 shadow-md hover:shadow-lg"
+        (onClick)="openNew()"></p-button>
+    </ng-template>
+  </p-toolbar>
 
-    <!-- Main Content -->
-    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-        <p-table #dt [value]="subjects" [rows]="paginationService.getItemsPerPage()" [paginator]="true"
-            [totalRecords]="totalSubjects" [lazy]="true" [globalFilterFields]="['name', 'code', 'description']"
-            (onPage)="paginate($event)" [rowHover]="true" dataKey="id"
-            [rowsPerPageOptions]="[10, 25, 50]" styleClass="p-datatable-lg" [showCurrentPageReport]="true"
-            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} subjects" >
+  <!-- Main Content -->
+  <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+    <p-table #dt [value]="subjects" [rows]="paginationService.getItemsPerPage()" [paginator]="true"
+      [totalRecords]="totalSubjects" [lazy]="true" [globalFilterFields]="['name', 'code', 'description']"
+      (onPage)="paginate($event)" [rowHover]="true" dataKey="id" [rowsPerPageOptions]="[10, 25, 50]"
+      styleClass="p-datatable-lg" [showCurrentPageReport]="true"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} subjects">
 
-            <!-- Table Caption -->
-            <ng-template pTemplate="caption">
-                <div class="flex flex-col sm:flex-row items-center justify-between gap-6 p-6">
-                    <h5 class="text-2xl font-semibold text-gray-800 m-0">Subjects List</h5>
-                    <form (ngSubmit)="onSearch()" class="flex gap-4 w-full sm:w-auto">
-                        <span class="p-input-icon-left w-full sm:w-64">
-                            <i class="pi pi-search"></i>
-                            <input pInputText [(ngModel)]="searchTerm" name="searchTerm" class="w-full"
-                                placeholder="Search subjects..." required />
-                        </span>
-                        <div class="flex gap-4">
-                            <p-button type="submit" severity="danger" label="Search" icon="pi pi-search"></p-button>
-                            <p-button type="button" severity="secondary" label="Clear" icon="pi pi-times"
-                                (onClick)="onResetSearch()"></p-button>
-                        </div>
-                    </form>
-                </div>
-            </ng-template>
-
-            <!-- Table Header -->
-            <ng-template pTemplate="header">
-                <tr class="bg-gray-50">
-                    <th class="font-semibold text-gray-700" pSortableColumn="code">
-                        Code <p-sortIcon field="code"></p-sortIcon>
-                    </th>
-                    <th class="font-semibold text-gray-700" pSortableColumn="name">
-                        Name <p-sortIcon field="name"></p-sortIcon>
-                    </th>
-                    <th class="font-semibold text-gray-700">Description</th>
-                    <th class="font-semibold text-gray-700" pSortableColumn="enabled">
-                        Status <p-sortIcon field="enabled"></p-sortIcon>
-                    </th>
-                    <th class="font-semibold text-gray-700" pSortableColumn="startDate">
-                        Start Date <p-sortIcon field="startDate"></p-sortIcon>
-                    </th>
-                    <th class="font-semibold text-gray-700" pSortableColumn="endDate">
-                        End Date <p-sortIcon field="endDate"></p-sortIcon>
-                    </th>
-                    <th class="font-semibold text-gray-700 text-center">Actions</th>
-                </tr>
-            </ng-template>
-
-            <!-- Table Body -->
-            <ng-template pTemplate="body" let-subject>
-                <tr class="hover:bg-gray-50 transition-colors duration-200">
-                    <td class="font-medium text-gray-700">{{ subject.Code }}</td>
-                    <td class="text-gray-800">{{ subject.Name }}</td>
-                    <td class="text-gray-600">{{ subject.Description }}</td>
-                    <td>
-                        <p-tag [value]="subject.Enabled ? 'Active' : 'Inactive'"
-                            [severity]="subject.Enabled ? 'success' : 'danger'" [rounded]="true"></p-tag>
-                    </td>
-                    <td>{{ subject.StartDate | date:'mediumDate' }}</td>
-                    <td>{{ subject.EndDate | date:'mediumDate' }}</td>
-                    <td>
-                        <div class="flex justify-center gap-4">
-                            <p-button icon="pi pi-pencil" severity="success" [rounded]="true" [text]="true"
-                                (onClick)="editSubject(subject)"></p-button>
-                            <p-button icon="pi pi-trash" severity="danger" [rounded]="true" [text]="true"
-                                (onClick)="deleteSubject(subject)"></p-button>
-                        </div>
-                    </td>
-                </tr>
-            </ng-template>
-
-            <!-- Table Summary -->
-            <ng-template pTemplate="summary">
-                <div class="flex justify-between items-center px-6 py-4 text-gray-600">
-                    <span>Total Subjects: {{ totalSubjects}}</span>
-                </div>
-            </ng-template>
-        </p-table>
-    </div>
-
-    <!-- Dialog -->
-    <p-dialog [(visible)]="subjectDialog" [style]="{ width: '500px' }" header="Subject Details" [modal]="true"
-        styleClass="p-fluid">
-        <ng-template pTemplate="content">
-            <div class="grid grid-cols-1 gap-6">
-                <div class="field">
-                    <label for="code" class="font-medium mb-2">Code</label>
-                    <input type="text" pInputText id="code" [(ngModel)]="subject.Code" class="w-full" required>
-                    <small class="p-error" *ngIf="submitted && !subject.Code">Code is required.</small>
-                </div>
-
-                <div class="field">
-                    <label for="name" class="font-medium mb-2">Name</label>
-                    <input type="text" pInputText id="name" [(ngModel)]="subject.Name" class="w-full" required>
-                    <small class="p-error" *ngIf="submitted && !subject.Name">Name is required.</small>
-                </div>
-
-                <div class="field">
-                    <label for="description" class="font-medium mb-2">Description</label>
-                    <textarea id="description" pInputTextarea [(ngModel)]="subject.Description" rows="4" class="w-full"
-                        required></textarea>
-                </div>
-
-                <div class="field">
-                    <label class="font-medium mb-2">Status</label>
-                    <div class="flex items-center gap-2">
-                        <p-checkbox [(ngModel)]="subject.Enabled" binary="true"></p-checkbox>
-                        <span class="text-gray-600">{{ subject.Enabled ? 'Active' : 'Inactive' }}</span>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    <div class="field">
-                        <label for="startDate" class="font-medium mb-2">Start Date</label>
-                        <p-calendar [(ngModel)]="subject.StartDate" id="startDate" showIcon></p-calendar>
-                    </div>
-
-                    <div class="field">
-                        <label for="endDate" class="font-medium mb-2">End Date</label>
-                        <p-calendar [(ngModel)]="subject.EndDate" id="endDate" showIcon></p-calendar>
-                    </div>
-                </div>
+      <!-- Table Caption -->
+      <ng-template pTemplate="caption">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-6 p-6">
+          <h5 class="text-2xl font-semibold text-gray-800 m-0">Subjects List</h5>
+          <form (ngSubmit)="onSearch()" class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+            <span class="p-input-icon-left w-full sm:w-64">
+              <i class="pi pi-search"></i>
+              <input pInputText [(ngModel)]="searchTerm" name="searchTerm" class="w-full"
+                placeholder="Search subjects..." required />
+            </span>
+            <div class="flex flex-col sm:flex-row gap-4">
+              <p-button type="submit" severity="danger" label="Search" icon="pi pi-search"></p-button>
+              <p-button type="button" severity="secondary" label="Clear" icon="pi pi-times"
+                (onClick)="onResetSearch()"></p-button>
             </div>
-        </ng-template>
+          </form>
+        </div>
+      </ng-template>
 
-        <!-- Dialog Footer -->
-        <ng-template pTemplate="footer">
-            <p-button label="Cancel" icon="pi pi-times" class="p-button-text"></p-button>
-            <p-button label="Save" icon="pi pi-check" severity="success" (click)="saveSubject()"></p-button>
-        </ng-template>
-    </p-dialog>
+      <!-- Table Header -->
+      <ng-template pTemplate="header">
+        <tr class="bg-gray-50">
+          <th class="font-semibold text-gray-700 text-center">Actions</th>
+          <th class="font-semibold text-gray-700" pSortableColumn="Code">
+            Code <p-sortIcon field="Code"></p-sortIcon>
+          </th>
+          <th class="font-semibold text-gray-700" pSortableColumn="Name">
+            Name <p-sortIcon field="Name"></p-sortIcon>
+          </th>
+          <th class="font-semibold text-gray-700" pSortableColumn="Professor">
+            Professor <p-sortIcon field="Professor"></p-sortIcon>
+          </th>
+          <th class="font-semibold text-gray-700">Description</th>
+          <th class="font-semibold text-gray-700">
+            Enabled
+          </th>
+          <th class="font-semibold text-gray-700" pSortableColumn="StartDate">
+            Start Date <p-sortIcon field="StartDate"></p-sortIcon>
+          </th>
+          <th class="font-semibold text-gray-700" pSortableColumn="EndDate">
+            End Date <p-sortIcon field="EndDate"></p-sortIcon>
+          </th>
+
+        </tr>
+      </ng-template>
+
+      <!-- Table Body -->
+      <ng-template pTemplate="body" let-subject>
+        <tr class="hover:bg-gray-50 transition-colors duration-200">
+          <td>
+            <div class="flex justify-center gap-1">
+              <p-button icon="pi pi-pencil" severity="success" [rounded]="true" [text]="true"
+                (onClick)="editSubject(subject)"></p-button>
+              <p-button icon="pi pi-trash" severity="danger" [rounded]="true" [text]="true"
+                (onClick)="deleteSubject(subject)"></p-button>
+            </div>
+          </td>
+          <td class="font-medium text-gray-700">{{ subject?.Code }}</td>
+          <td class="text-gray-800">{{ subject?.Name }}</td>
+          <td class="text-gray-800">{{ subject?.Professor?.FullName }}</td>
+          <td class="text-gray-600">{{ subject?.Description }}</td>
+          <td>
+            <p-tag [value]="subject?.Enabled ? 'Active' : 'Inactive'"
+              [severity]="subject?.Enabled ? 'success' : 'danger'" [rounded]="true"></p-tag>
+          </td>
+          <td>{{ subject?.StartDate | date:'mediumDate' }}</td>
+          <td>{{ subject?.EndDate | date:'mediumDate' }}</td>
+        </tr>
+      </ng-template>
+
+      <!-- Table Summary -->
+      <ng-template pTemplate="summary">
+        <div class="flex justify-between items-center px-6 py-4 text-gray-600">
+          <span>Total Subjects: {{ totalSubjects}}</span>
+        </div>
+      </ng-template>
+    </p-table>
+  </div>
 </div>
+
+<!-- Dialog -->
+<p-dialog [(visible)]="subjectDialog" [style]="{ width: '650px' }" header="Subject Details" [modal]="true"
+  styleClass="p-fluid bg-white rounded-lg shadow-lg" [breakpoints]="{'960px': '75vw', '640px': '90vw'}"
+  [draggable]="false" [resizable]="false">
+
+  <ng-template pTemplate="header">
+    <div class="flex items-center gap-2 text-xl font-semibold text-gray-800">
+      <i class="pi pi-book"></i>
+      <span>Subject Details</span>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="content">
+    <div class="grid grid-cols-1 gap-6 p-4">
+      <!-- Code Field -->
+      <div class="field">
+        <label for="code" class="block text-gray-700 font-medium mb-2">Code</label>
+        <span class="p-input-icon-left w-full">
+          <i class="pi pi-tag"></i>
+          <input type="text" pInputText id="code" [(ngModel)]="subject.Code" class="w-full p-inputtext-sm"
+            placeholder="Enter subject code" required>
+        </span>
+      </div>
+
+      <!-- Name Field -->
+      <div class="field">
+        <label for="name" class="block text-gray-700 font-medium mb-2">Name *</label>
+        <span class="p-input-icon-left w-full">
+          <i class="pi pi-info-circle"></i>
+          <input type="text" pInputText id="name" [(ngModel)]="subject.Name"
+            [ngClass]="{'ng-invalid ng-dirty': submitted && !subject.Name}" class="w-full p-inputtext-sm"
+            placeholder="Enter subject name" required>
+        </span>
+        <small class="p-error block mt-1" *ngIf="submitted && !subject.Name">
+          <i class="pi pi-exclamation-circle mr-1"></i>Name is required
+        </small>
+      </div>
+
+
+      <div class="field">
+        <label for="ProfessorId" class="block text-gray-700 font-medium mb-2">Professor</label>
+        <p-dropdown [options]="professors" [filter]="true" filterBy="FullName" [(ngModel)]="subject.ProfessorId"
+          optionLabel="FullName" placeholder="Select a professor" optionValue="Id" styleClass="w-full p-inputtext-sm"
+          [panelStyleClass]="'text-sm'" [showClear]="true">
+
+        </p-dropdown>
+      </div>
+
+      <!-- Description Field -->
+      <div class="field">
+        <label for="description" class="block text-gray-700 font-medium mb-2">Description </label>
+        <textarea id="description" pInputTextarea [(ngModel)]="subject.Description" rows="4"
+          class="w-full p-inputtext-sm" placeholder="Enter subject description"></textarea>
+      </div>
+
+      <!-- Dates Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <!-- Start Date -->
+        <div class="field">
+          <label for="StartDate" class="block text-gray-700 font-medium mb-2">Start Date *</label>
+          <span class="p-input-icon-left w-full">
+            <i class="pi pi-calendar"></i>
+            <input type="date" pInputText id="StartDate" [(ngModel)]="subject.StartDate"
+              [ngClass]="{'ng-invalid ng-dirty': submitted && !subject.StartDate}" class="w-full p-inputtext-sm"
+              required>
+          </span>
+          <small class="p-error block mt-1" *ngIf="submitted && !subject.StartDate">
+            <i class="pi pi-exclamation-circle mr-1"></i>Start Date is required
+          </small>
+        </div>
+
+        <!-- End Date -->
+        <div class="field">
+          <label for="EndDate" class="block text-gray-700 font-medium mb-2">End Date *</label>
+          <span class="p-input-icon-left w-full">
+            <i class="pi pi-calendar"></i>
+            <input type="date" pInputText id="EndDate" [(ngModel)]="subject.EndDate"
+              [ngClass]="{'ng-invalid ng-dirty': submitted && !subject.EndDate}" class="w-full p-inputtext-sm" required>
+          </span>
+          <small class="p-error block mt-1" *ngIf="submitted && !subject.EndDate">
+            <i class="pi pi-exclamation-circle mr-1"></i>End Date is required
+          </small>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <!-- Dialog Footer -->
+  <ng-template pTemplate="footer">
+    <div class="flex justify-end gap-2 px-4 py-2 bg-gray-50">
+      <p-button label="Cancel" icon="pi pi-times" (click)="hideDialog()" styleClass="p-button-text p-button-secondary">
+      </p-button>
+      <p-button label="Save" icon="pi pi-save" (click)="saveSubject()" styleClass="p-button-success">
+      </p-button>
+    </div>
+  </ng-template>
+</p-dialog>
+
+<p-confirmDialog [style]="{ width: '450px' }" />

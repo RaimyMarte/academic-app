@@ -24,6 +24,8 @@ import { PaginationQuery } from '../../../../types/paginationQuery';
 import { getPageChangeDetails } from '../../../../utils/getPageChangeDetails';
 import { PageChangeEvent } from '../../../../types/pageChangeEvent';
 import { SearchService } from '../../../../services/ui/seach.service';
+import { UserService } from '../../../../services/user/user.service';
+import { User } from '../../../../types/user';
 
 @Component({
   selector: 'app-subjects-list',
@@ -40,6 +42,8 @@ export class SubjectsListComponent implements OnInit {
   subject!: Partial<Subject>;
   selectedSubjects!: Subject[] | null;
 
+  professors: User[] = []
+
   totalSubjects: number = 0;
   searchTerm: string = ''
 
@@ -47,14 +51,20 @@ export class SubjectsListComponent implements OnInit {
 
   statuses!: any[];
 
-  constructor(private subjectService: SubjectService, private messageService: MessageService, private confirmationService: ConfirmationService, public paginationService: PaginationService, private searchService: SearchService) { }
+  constructor(private subjectService: SubjectService, private userService: UserService, private messageService: MessageService, private confirmationService: ConfirmationService, public paginationService: PaginationService, private searchService: SearchService) { }
 
   async ngOnInit() {
-    const currentPage = this.paginationService.getCurrentPage()
-    const rowsPerPage = this.paginationService.getItemsPerPage()
-    this.searchTerm = this.searchService.getSearchTerm()
+    this.initializeSubjectList()
+    this.professors = await this.userService.getProfessors();
+  }
 
-    this.loadSubjects({ currentPage: currentPage, currentPageSize: rowsPerPage, search: this.searchTerm });
+  async initializeSubjectList() {
+    const currentPage = this.paginationService.getCurrentPage();
+    const rowsPerPage = this.paginationService.getItemsPerPage();
+    this.searchTerm = this.searchService.getSearchTerm();
+
+    // Call loadSubjects to load the data with the current page, page size, and search term
+    await this.loadSubjects({ currentPage: currentPage, currentPageSize: rowsPerPage, search: this.searchTerm });
   }
 
   async loadSubjects({ currentPage, currentPageSize, search }: PaginationQuery) {
@@ -92,36 +102,21 @@ export class SubjectsListComponent implements OnInit {
     this.subjectDialog = true;
   }
 
-  deleteSelectedSubjects() {
-    this.confirmationService.confirm({
-      message: 'Are you sure you want to delete the selected Subjects?',
-      header: 'Confirm',
-      icon: 'pi pi-exclamation-triangle',
-      accept: () => {
-        this.subjects = this.subjects.filter((subject) =>
-          !this.selectedSubjects?.some((selected) => selected.Id && selected.Id === subject.Id)
-        );
-
-        this.selectedSubjects = null;
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Subjects Deleted', life: 3000 });
-      }
-    });
-  }
-
   editSubject(subject: Subject) {
     this.subject = { ...subject };
+    console.log(this.subject)
     this.subjectDialog = true;
   }
 
-  deleteSubject(Subject: Subject) {
+  deleteSubject(subject: Subject) {
     this.confirmationService.confirm({
-      message: 'Are you sure you want to delete ' + Subject.Name + '?',
+      message: 'Are you sure you want to delete ' + subject?.Name + '?',
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.subjects = this.subjects.filter((val) => val.Id !== Subject.Id);
+        this.subjectService.deleteSubject(subject?.Id);
+        this.initializeSubjectList()
         this.subject = {};
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Subject Deleted', life: 3000 });
       }
     });
   }
@@ -135,52 +130,15 @@ export class SubjectsListComponent implements OnInit {
     this.submitted = true;
 
     if (this.subject.Name?.trim()) {
-      if (this.subject.Id) {
-        this.subjects[this.findIndexById(this.subject.Id)] = this.subject;
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Subject Updated', life: 3000 });
+      if (this.subject?.Id) {
+        this.subjectService.updateSubject({ body: this.subject, subjectId: this.subject?.Id });
       } else {
-        this.subject.Id = this.createId();
-        this.subjects.push(this.subject);
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Subject Created', life: 3000 });
+        this.subjectService.createSubject(this.subject);
       }
 
-      this.subjects = [...this.subjects];
+      this.initializeSubjectList()
       this.subjectDialog = false;
       this.subject = {};
-    }
-  }
-
-  findIndexById(id: string): number {
-    let index = -1;
-    for (let i = 0; i < this.subjects.length; i++) {
-      if (this.subjects[i].Id === id) {
-        index = i;
-        break;
-      }
-    }
-
-    return index;
-  }
-
-  createId(): string {
-    let id = '';
-    var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    for (var i = 0; i < 5; i++) {
-      id += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return id;
-  }
-
-  getSeverity(status: string): 'success' | 'warning' | 'danger' | 'info' {
-    switch (status) {
-      case 'INSTOCK':
-        return 'success';
-      case 'LOWSTOCK':
-        return 'warning';
-      case 'OUTOFSTOCK':
-        return 'danger';
-      default:
-        return 'info';
     }
   }
 }
