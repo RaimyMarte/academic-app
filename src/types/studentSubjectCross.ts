@@ -5,4 +5,5 @@ export interface StudentSubjectCross {
   CreatedDate: Date;
   CreatedBy: string | null;
   Grade: number | null;
+  LetterGrade: string | null;
 }

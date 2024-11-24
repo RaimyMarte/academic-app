@@ -25,7 +25,6 @@ import { InputTextModule } from 'primeng/inputtext';
 })
 
 export class SubjectAttendanceComponent implements OnInit {
-  enrollStudentsDialog: boolean = false;
   subjectId: string | null = ''
   subject!: Subject | null
   selectedDate: string = new Date().toISOString().split('T')[0];

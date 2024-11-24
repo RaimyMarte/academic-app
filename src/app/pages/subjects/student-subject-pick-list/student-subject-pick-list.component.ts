@@ -22,11 +22,10 @@ import { Subject } from '../../../../types/subject';
   styleUrl: './student-subject-pick-list.component.css'
 })
 export class StudentSubjectPickListComponent implements OnInit {
-  enrollStudentsDialog: boolean = false;
   subjectId: string | null = ''
   subject!: Subject | null
-  enrolledStudents!: Student[];;
-  notEnrolledStudents!: Student[];;
+  enrolledStudents!: Student[];
+  notEnrolledStudents!: Student[];
 
   constructor(private studentSubjectCrossService: StudentSubjectCrossService, private confirmationService: ConfirmationService, private subjectService: SubjectService, private route: ActivatedRoute) { }
 

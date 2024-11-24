@@ -1,0 +1,69 @@
+<div class="min-h-screen bg-gray-50 p-6">
+    <!-- Header Section -->
+    <div class="mb-8">
+        <h1 class="text-3xl font-bold text-gray-800 mb-2">
+            Update Grades for {{ subject?.Name }}
+        </h1>
+        <p class="text-gray-600">Manage and update grades for students in {{ subject?.Name }}</p>
+
+    </div>
+
+    <!-- Toolbar -->
+    <p-toolbar styleClass="mb-6 shadow-lg bg-white rounded-lg border-none">
+        <ng-template pTemplate="left">
+            <!-- Edit Mode Button -->
+            <p-button *ngIf="!isEditing" severity="primary" label="Edit Grades" icon="pi pi-pencil"
+                class="mr-4 shadow-md hover:shadow-lg" (click)="enableEditMode()"></p-button>
+
+            <!-- Save Grades Button -->
+            <p-button *ngIf="isEditing" severity="success" label="Save Changes" icon="pi pi-save"
+                class="mr-4 shadow-md hover:shadow-lg" (click)="saveGrades()"></p-button>
+
+            <!-- Cancel Button -->
+            <p-button *ngIf="isEditing" severity="secondary" label="Cancel" icon="pi pi-times"
+                class="mr-4 shadow-md hover:shadow-lg" (click)="cancelEditMode()"></p-button>
+        </ng-template>
+    </p-toolbar>
+
+    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+        <p-table #dt [value]="enrolledStudentsWithGrades" editable="true" styleClass="p-datatable-lg">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th class="font-semibold text-gray-700">
+                        Picture
+                    </th>
+                    <th class="font-semibold text-gray-700" pSortableColumn="Student">
+                        Student <p-sortIcon field="Student"></p-sortIcon>
+                    </th>
+                    <th class="font-semibold text-gray-700" pSortableColumn="Grade">
+                        Grade <p-sortIcon field="Grade"></p-sortIcon>
+                    </th>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-studentSubjectCross let-editing="editing">
+                <tr>
+                    <td>
+                        <p-avatar [image]="studentSubjectCross?.Student?.Picture" styleClass="mr-2" size="large"
+                            styleClass="bg-blue-500 text-gray-200" shape="circle" />
+                    </td>
+                    <td class="text-gray-800">{{studentSubjectCross?.Student?.FullName }}</td>
+                    <td class="text-gray-700" [pEditableColumn]="studentSubjectCross.Grade"
+                        pEditableColumnField="Grade">
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <p-inputNumber [(ngModel)]="studentSubjectCross.Grade" inputId="Grade" [disabled]="!isEditing" mode="decimal" 
+                                    [min]="0" [max]="100" />
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{getGradeLetter (studentSubjectCross.Grade) }}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
+
+<p-confirmDialog [style]="{ width: '450px' }" />

@@ -11,6 +11,7 @@ import { SubjectsListComponent } from './pages/subjects/subjects-list/subjects-l
 import { UserListComponent } from './pages/user/user-list/user-list.component';
 import { LayoutComponent } from './ui/layout/layout.component';
 import { SubjectAttendanceComponent } from './pages/subjects/subject-attendance/subject-attendance.component';
+import { StudentsGradesComponent } from './pages/subjects/students-grades/students-grades.component';
 
 export const routes: Routes = [
   {
@@ -43,6 +44,12 @@ export const routes: Routes = [
       {
         path: 'subjects/attendance/:subjectId', 
         component: SubjectAttendanceComponent,
+        canActivate: [AuthGuard],
+        // data: { roles: ['professor', 'admin'] }
+      },    
+      {
+        path: 'subjects/grades/:subjectId', 
+        component: StudentsGradesComponent,
         canActivate: [AuthGuard],
         // data: { roles: ['professor', 'admin'] }
       },    

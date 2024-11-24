@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Student } from '../../types/student';
 import { ApiService } from '../api/api.service';
 import { AuthService } from '../auth/auth.service';
+import { StudentSubjectCross } from '../../types/studentSubjectCross';
 
 interface SaveSubjectEnrollmentBody {
     SubjectId: string;
@@ -12,10 +13,15 @@ interface SaveSubjectEnrollmentBody {
 interface SaveStudentsGradesBody {
     SubjectId: string;
     GradesMap: {
-        StudentId: string,
+        StudentSubjectCrossId: string,
         Grade: number
     }[]
 }
+
+export interface EnrolledStudentsWithGrades extends StudentSubjectCross {
+    Student: Student;
+}
+
 
 @Injectable({
     providedIn: 'root'
@@ -40,6 +46,14 @@ export class StudentSubjectCrossService {
 
         return data
     }
+
+    async getEnrolledStudentsWithGrades(subjectId: string) {
+        const response = await this.apiService.get(`/students_in_subject_with_grades/${subjectId}`, this.authService.authHeader());
+        const data = response?.data as EnrolledStudentsWithGrades[];
+
+        return data
+    }
+
 
     async saveSubjectEnrollment(body: SaveSubjectEnrollmentBody) {
         await this.apiService.post('/save_subject_enrollment', body, this.authService.authHeader());
