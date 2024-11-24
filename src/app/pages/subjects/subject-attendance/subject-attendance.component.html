@@ -40,7 +40,7 @@
                     <i class="pi pi-check-circle text-green-600 text-xl"></i>
                 </div>
                 <div>
-                    <h3 class="text-sm text-green-600 font-medium">Absent Enrolled</h3>
+                    <h3 class="text-sm text-green-600 font-medium">Absent Students</h3>
                     <p class="text-2xl font-bold text-green-800">{{absentStudents.length}}</p>
                 </div>
             </div>
@@ -52,14 +52,15 @@
         <div class="flex items-center gap-4 mb-6 pl-3">
             <label for="attendance-date" class="text-gray-800 font-semibold text-lg">Attendance Date:</label>
             <input id="attendance-date" pInputText type="date" [(ngModel)]="selectedDate"
+                (ngModelChange)="onDateChange($event)"
                 class="p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 text-gray-800 transition-all duration-200 focus:outline-none"
                 [pTooltip]="'Select Attendance Date'" tooltipPosition="top" />
         </div>
 
-        <p-pickList [source]="presentStudents" [target]="absentStudents" sourceHeader="Available Students"
-            targetHeader="Currently Enrolled" [dragdrop]="true" [responsive]="true" [sourceStyle]="{ height: '32rem' }"
+        <p-pickList [source]="presentStudents" [target]="absentStudents" sourceHeader="Present Students"
+            targetHeader="Absent Students" [dragdrop]="true" [responsive]="true" [sourceStyle]="{ height: '32rem' }"
             [targetStyle]="{ height: '32rem' }" filterBy="FullName"
-            sourceFilterPlaceholder="Search available students..." targetFilterPlaceholder="Search enrolled students..."
+            sourceFilterPlaceholder="Search present students..." targetFilterPlaceholder="Search absent students..."
             breakpoint="1200px" [showSourceControls]="false" [showTargetControls]="false" styleClass="border-none">
 
             <ng-template let-student pTemplate="item">

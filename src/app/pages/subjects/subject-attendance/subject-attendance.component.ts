@@ -38,10 +38,20 @@ export class SubjectAttendanceComponent implements OnInit {
     this.subjectId = this.route.snapshot.paramMap.get('subjectId');
     this.subject = await this.subjectService.getSubject(this.subjectId || '');
 
-    const data = await this.subjectAttendanceService.getSubjectAttendance(this.subjectId || '', this.selectedDate)
+    await this.loadAttendanceData(this.selectedDate);
+  }
+
+  async onDateChange(newDate: string) {
+    this.selectedDate = newDate
+    await this.loadAttendanceData(newDate);
+  }
+
+  async loadAttendanceData(date: string) {
+    const data = await this.subjectAttendanceService.getSubjectAttendance(this.subjectId || '', date)
     this.presentStudents = data?.presentStudents
     this.absentStudents = data?.absentStudents
   }
+
 
   saveChanges() {
     this.confirmationService.confirm({
