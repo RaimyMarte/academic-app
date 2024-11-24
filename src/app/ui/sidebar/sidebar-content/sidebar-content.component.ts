@@ -49,20 +49,8 @@ export class SidebarContentComponent {
         visible: true
       },
       {
-        label: 'Profile',
-        icon: 'pi pi-user',
-        routerLink: '/profile',
-        visible: true
-      },
-      {
-        label: 'Professor Dashboard',
-        icon: 'pi pi-users',
-        routerLink: '/professor',
-        visible: this.currentUser?.UserRoleId === 2
-      },
-      {
         label: 'Subjects',
-        icon: 'pi pi-users',
+        icon: 'pi pi-book',
         routerLink: '/subjects',
         visible: this.currentUser?.UserRoleId === 2 || this.currentUser?.UserRoleId === 1
       },

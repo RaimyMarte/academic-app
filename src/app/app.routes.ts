@@ -5,11 +5,11 @@ import { HomeComponent } from './home/home.component';
 import { NonAuthGuard } from './non-auth.guard';
 import { LoginComponent } from './pages/auth/login/login.component';
 import { ProfessorDashboardComponent } from './pages/professor-dashboard/professor-dashboard.component';
+import { StudentsListComponent } from './pages/student/student-list/student-list.component';
+import { StudentSubjectPickListComponent } from './pages/subjects/student-subject-pick-list/student-subject-pick-list.component';
 import { SubjectsListComponent } from './pages/subjects/subjects-list/subjects-list.component';
-import { ProfileComponent } from './pages/user/profile/profile.component';
 import { UserListComponent } from './pages/user/user-list/user-list.component';
 import { LayoutComponent } from './ui/layout/layout.component';
-import { StudentsListComponent } from './pages/student/student-list/student-list.component';
 
 export const routes: Routes = [
   {
@@ -19,11 +19,6 @@ export const routes: Routes = [
       {
         path: '',
         component: HomeComponent,
-        canActivate: [AuthGuard]
-      },
-      {
-        path: 'profile',
-        component: ProfileComponent,
         canActivate: [AuthGuard]
       },
       {
@@ -38,6 +33,12 @@ export const routes: Routes = [
         canActivate: [AuthGuard],
         // data: { roles: ['professor', 'admin'] }
       },
+      {
+        path: 'subjects/enroll/:subjectId', 
+        component: StudentSubjectPickListComponent,
+        canActivate: [AuthGuard],
+        // data: { roles: ['professor', 'admin'] }
+      },      
       {
         path: 'students',
         component: StudentsListComponent,

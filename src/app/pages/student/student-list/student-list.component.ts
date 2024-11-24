@@ -100,6 +100,8 @@ export class StudentsListComponent implements OnInit {
       message: 'Are you sure you want to delete ' + student?.FullName + '?',
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
+      acceptButtonStyleClass:"p-button-primary",
+      rejectButtonStyleClass:"p-button-secondary p-button-text",
       accept: () => {
         this.studentService.deleteStudent(student?.Id);
         this.initializeStudentList()

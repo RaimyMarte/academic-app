@@ -1,5 +1,4 @@
 <div class="min-h-screen bg-gray-50 p-6">
-  <p-toast></p-toast>
 
   <!-- Header Section -->
   <div class="mb-8">
@@ -79,6 +78,8 @@
         <tr class="hover:bg-gray-50 transition-colors duration-200">
           <td>
             <div class="flex justify-center gap-1">
+              <p-button pTooltip="Enroll Students" icon="pi pi-users" severity="primary" [rounded]="true" [text]="true"
+                [routerLink]="['/subjects/enroll', subject?.Id]"></p-button>
               <p-button pTooltip="Edit subject" icon="pi pi-pencil" severity="success" [rounded]="true" [text]="true"
                 (onClick)="editSubject(subject)"></p-button>
               <p-button pTooltip="Delete subject" icon="pi pi-trash" severity="danger" [rounded]="true" [text]="true"

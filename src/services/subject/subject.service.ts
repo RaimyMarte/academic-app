@@ -35,6 +35,13 @@ export class SubjectService {
         };
     }
 
+    async getSubject(subjectId: string) {
+        const response = await this.apiService.get(`/get_subject/${subjectId}`, this.authService.authHeader());
+        const subject = response?.data as Subject;
+
+        return subject
+    }
+
     async createSubject(body: any) {
         await this.apiService.post('/create_subject', body, this.authService.authHeader());
     }
