@@ -28,6 +28,7 @@ import { MaintenanceService } from '../../../../services/maintenance/maintenance
 import { TooltipModule } from 'primeng/tooltip';
 import { CheckboxModule } from 'primeng/checkbox';
 import { UserDialogComponent } from '../../../components/user/user-dialog/user-dialog.component';
+import { AvatarModule } from 'primeng/avatar';
 
 export interface CustomUser extends Partial<User> {
   AutomaticPassword?: boolean;
@@ -38,7 +39,7 @@ export interface CustomUser extends Partial<User> {
 @Component({
   selector: 'app-user-list',
   standalone: true,
-  imports: [TableModule, ReactiveFormsModule, DialogModule, TooltipModule, CheckboxModule, RippleModule, ButtonModule, ToastModule, ToolbarModule, InputTextModule, InputTextareaModule, CommonModule, FileUploadModule, DropdownModule, TagModule, RadioButtonModule, RatingModule, InputTextModule, FormsModule, InputNumberModule, UserDialogComponent],
+  imports: [TableModule, ReactiveFormsModule, AvatarModule, DialogModule, TooltipModule, CheckboxModule, RippleModule, ButtonModule, ToastModule, ToolbarModule, InputTextModule, InputTextareaModule, CommonModule, FileUploadModule, DropdownModule, TagModule, RadioButtonModule, RatingModule, InputTextModule, FormsModule, InputNumberModule, UserDialogComponent],
   providers: [],
   templateUrl: './user-list.component.html',
   styleUrl: './user-list.component.css'

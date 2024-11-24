@@ -41,8 +41,6 @@ export class SubjectDialogComponent {
     })
   )
   submitted: boolean = false;
-  subjectRoles: Maintenance[] = []
-
   professors: User[] = []
 
   constructor(private subjectService: SubjectService, private userService: UserService,) { }

@@ -3,7 +3,6 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { MaintenanceService } from '../../../../services/maintenance/maintenance.service';
 import { UserService } from '../../../../services/user/user.service';
 import { Maintenance } from '../../../../types/maintenance';
-import { CustomUser } from '../../../pages/user/user-list/user-list.component';
 import { DialogModule } from 'primeng/dialog';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ButtonModule } from 'primeng/button';
@@ -12,6 +11,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { CommonModule } from '@angular/common';
 import { DropdownModule } from 'primeng/dropdown';
 import { RippleModule } from 'primeng/ripple';
+import { CustomUser } from '../../../pages/user/user-list/user-list.component';
 
 @Component({
   selector: 'app-user-dialog',
@@ -35,7 +35,7 @@ export class UserDialogComponent implements OnInit {
       LastName: new FormControl('', [Validators.required]),
       UserName: new FormControl('', [Validators.required]),
       UserRoleId: new FormControl(null, [Validators.required]),
-      Email: new FormControl('', [Validators.required, Validators.email]),
+      Email: new FormControl('', [Validators.required]),
       Phone: new FormControl(''),
       Authorized: new FormControl(false),
       AutomaticPassword: new FormControl(true),

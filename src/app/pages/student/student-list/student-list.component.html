@@ -1,1 +1,129 @@
-<p>student-list works!</p>
+<div class="min-h-screen bg-gray-50 p-6">
+  <p-toast></p-toast>
+
+  <!-- Header Section -->
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold text-gray-800 mb-2">Student Management</h1>
+    <p class="text-gray-600">Manage and organize students</p>
+  </div>
+
+  <!-- Toolbar -->
+  <p-toolbar styleClass="mb-6 shadow-lg bg-white rounded-lg border-none">
+    <ng-template pTemplate="left">
+      <p-button severity="primary" label="New student" icon="pi pi-plus" class="mr-4 shadow-md hover:shadow-lg"
+        (onClick)="openNew()"></p-button>
+    </ng-template>
+  </p-toolbar>
+
+  <!-- Main Content -->
+  <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+    <p-table #dt [value]="students" [rows]="paginationService.getItemsPerPage()" [paginator]="true"
+      [totalRecords]="totalStudents" [lazy]="true" [globalFilterFields]="['name', 'code', 'description']"
+      (onPage)="paginate($event)" [rowHover]="true" dataKey="id" [rowsPerPageOptions]="[10, 25, 50]"
+      styleClass="p-datatable-lg" [showCurrentPageReport]="true"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} students">
+
+      <!-- Table Caption -->
+      <ng-template pTemplate="caption">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-6 p-6">
+          <h5 class="text-2xl font-semibold text-gray-800 m-0">Students List</h5>
+          <form (ngSubmit)="onSearch()" class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+            <span class="p-input-icon-left w-full sm:w-64">
+              <i class="pi pi-search"></i>
+              <input pInputText [(ngModel)]="searchTerm" name="searchTerm" class="w-full"
+                placeholder="Search students..." required />
+            </span>
+            <div class="flex flex-col sm:flex-row gap-4">
+              <p-button type="submit" severity="danger" label="Search" icon="pi pi-search"></p-button>
+              <p-button type="button" severity="secondary" label="Clear" icon="pi pi-times"
+                (onClick)="onResetSearch()"></p-button>
+            </div>
+          </form>
+        </div>
+      </ng-template>
+
+      <!-- Table Header -->
+      <ng-template pTemplate="header">
+        <tr class="bg-gray-50">
+          <th class="font-semibold text-gray-700 text-center">Actions</th>
+          <th class="font-semibold text-gray-700">
+            Picture
+          </th>
+          <th class="font-semibold text-gray-700" pSortableColumn="Name">
+            Name <p-sortIcon field="Name"></p-sortIcon>
+          </th>
+          <th class="font-semibold text-gray-700" pSortableColumn="Code">
+            Code <p-sortIcon field="Code"></p-sortIcon>
+          </th>
+          <th class="font-semibold text-gray-700">Age / Gender</th>
+          <th class="font-semibold text-gray-700">Email / Phone</th>
+          <th class="font-semibold text-gray-700">Parent</th>
+          <th class="font-semibold text-gray-700">
+            Created
+          </th>
+          <th class="font-semibold text-gray-700">
+            Last Updated
+          </th>
+        </tr>
+      </ng-template>
+
+      <!-- Table Body -->
+      <ng-template pTemplate="body" let-student>
+        <tr class="hover:bg-gray-50 transition-colors duration-200">
+          <td>
+            <div class="flex justify-center gap-1">
+              <p-button pTooltip="Edit student" icon="pi pi-pencil" severity="success" [rounded]="true" [text]="true"
+                (onClick)="editStudent(student)"></p-button>
+              <p-button pTooltip="Delete student" icon="pi pi-trash" severity="danger" [rounded]="true" [text]="true"
+                (onClick)="deleteStudent(student)"></p-button>
+            </div>
+          </td>
+          <td>
+            <!-- [label]="student?.FirstName.charAt(0).toUpperCase()" -->
+            <p-avatar [image]="student?.Picture" styleClass="mr-2" size="large" styleClass="bg-blue-500 text-gray-200"
+              shape="circle" />
+          </td>
+          <td class="text-gray-800">{{ student?.FullName }}</td>
+          <td class="text-gray-700">{{ student?.Code }}</td>
+          <td class="text-gray-600">
+            {{ student?.Age }}
+            <br>
+            {{ student?.GenderName }}
+          </td>
+          <td class="text-gray-600">
+            {{ student?.EmailAddress }}
+            <br>
+            {{ student?.PhoneNumber }}
+          </td>
+          <td class="text-gray-600">
+            {{ student?.ParentName }}
+            <br>
+            {{ student?.ParentPhoneNumber }}
+          </td>
+          <td class="text-gray-600">
+            {{ student?.CreatedDate | date:'MM-dd-yyyy HH:mm:ss' }}
+            <br>
+            {{ student?.studentCreatedBy?.FullName }}
+          </td>
+          <td class="text-gray-600">
+            {{ student?.LastUpdatedDate | date:'MM-dd-yyyy HH:mm:ss' }}
+            <br>
+            {{ student?.studentLastUpdatedBy?.FullName }}
+          </td>
+        </tr>
+      </ng-template>
+
+      <!-- Table Summary -->
+      <ng-template pTemplate="summary">
+        <div class="flex justify-between items-center px-6 py-4 text-gray-600">
+          <span>Total students: {{ totalStudents}}</span>
+        </div>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+
+
+<app-student-dialog [student]="student" [initializeStudentList]="initializeStudentList"></app-student-dialog>
+<p-confirmDialog [style]="{ width: '450px' }" />

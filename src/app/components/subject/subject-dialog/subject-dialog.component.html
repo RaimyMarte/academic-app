@@ -68,12 +68,9 @@
         <div class="field">
           <label for="ProfessorId" class="block text-gray-700 font-medium mb-2">Professor</label>
           <p-dropdown [options]="professors" formControlName="ProfessorId" [filter]="true" filterBy="FullName"
-            optionLabel="FullName" placeholder="Select a Professor" optionValue="Id" required
+            optionLabel="FullName" placeholder="Select a Professor" optionValue="Id"
             styleClass="w-full p-inputtext-sm" [panelStyleClass]="'text-sm'" [showClear]="true">
           </p-dropdown>
-          <small class="p-error block mt-1" *ngIf="submitted && subjectForm().get('ProfessorId')?.invalid">
-            <i class="pi pi-exclamation-circle mr-1"></i>Professor is required
-          </small>
         </div>
 
         <div class="field">

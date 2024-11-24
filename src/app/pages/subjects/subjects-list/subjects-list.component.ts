@@ -6,12 +6,7 @@ import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
-import { FileUploadModule } from 'primeng/fileupload';
-import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
-import { InputTextareaModule } from 'primeng/inputtextarea';
-import { RadioButtonModule } from 'primeng/radiobutton';
-import { RatingModule } from 'primeng/rating';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
@@ -21,7 +16,6 @@ import { TooltipModule } from 'primeng/tooltip';
 import { SubjectService } from '../../../../services/subject/subject.service';
 import { PaginationService } from '../../../../services/ui/pagination.service';
 import { SearchService } from '../../../../services/ui/seach.service';
-import { UserService } from '../../../../services/user/user.service';
 import { PageChangeEvent } from '../../../../types/pageChangeEvent';
 import { PaginationQuery } from '../../../../types/paginationQuery';
 import { Subject } from '../../../../types/subject';
@@ -31,7 +25,7 @@ import { SubjectDialogComponent } from '../../../components/subject/subject-dial
 @Component({
   selector: 'app-subjects-list',
   standalone: true,
-  imports: [TableModule, DialogModule, SubjectDialogComponent, TooltipModule, RippleModule, ButtonModule, ToastModule, ToolbarModule, ConfirmDialogModule, InputTextModule, InputTextareaModule, CommonModule, FileUploadModule, DropdownModule, TagModule, RadioButtonModule, RatingModule, InputTextModule, FormsModule, InputNumberModule],
+  imports: [TableModule, DialogModule, SubjectDialogComponent, TooltipModule, RippleModule, ButtonModule, ToastModule, ToolbarModule, ConfirmDialogModule, InputTextModule, CommonModule, DropdownModule, TagModule, InputTextModule, FormsModule,],
   providers: [ConfirmationService],
   templateUrl: './subjects-list.component.html',
   styleUrl: './subjects-list.component.css',
@@ -48,7 +42,7 @@ export class SubjectsListComponent implements OnInit {
   @ViewChild(SubjectDialogComponent) subjectDialogComponent!: SubjectDialogComponent;
 
 
-  constructor(private subjectService: SubjectService, private userService: UserService, private confirmationService: ConfirmationService, public paginationService: PaginationService, private searchService: SearchService) { }
+  constructor(private subjectService: SubjectService, private confirmationService: ConfirmationService, public paginationService: PaginationService, private searchService: SearchService) { }
 
   async ngOnInit() {
     this.initializeSubjectList()

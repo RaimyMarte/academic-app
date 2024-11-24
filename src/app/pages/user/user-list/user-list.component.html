@@ -17,7 +17,7 @@
 
     <!-- Main Content -->
     <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-        <p-table #dt [value]="users" [rows]="paginationService.getItemsPerPage()" [paginator]="true" 
+        <p-table #dt [value]="users" [rows]="paginationService.getItemsPerPage()" [paginator]="true"
             [totalRecords]="totalUsers" [lazy]="true" [globalFilterFields]="['name', 'code', 'description']"
             (onPage)="paginate($event)" [rowHover]="true" dataKey="id" [rowsPerPageOptions]="[10, 25, 50]"
             styleClass="p-datatable-lg" [showCurrentPageReport]="true"
@@ -46,6 +46,9 @@
             <ng-template pTemplate="header">
                 <tr class="bg-gray-50">
                     <th class="font-semibold text-gray-700 text-center">Actions</th>
+                    <th class="font-semibold text-gray-700">
+                        Picture
+                    </th>
                     <th class="font-semibold text-gray-700" pSortableColumn="FullName">
                         Name <p-sortIcon field="FullName"></p-sortIcon>
                     </th>
@@ -61,7 +64,7 @@
                     </th>
                     <th class="font-semibold text-gray-700">Last Access</th>
                     <th class="font-semibold text-gray-700">Password Changed</th>
-                    
+
                     <!-- <th class="font-semibold text-gray-700">
                         Created
                     </th>
@@ -81,6 +84,11 @@
                             <p-button pTooltip="Edit user password" icon="pi pi-key" severity="danger" [rounded]="true"
                                 [text]="true" (onClick)="resetUserPassword(user)"></p-button>
                         </div>
+                    </td>
+                    <td>
+                        <!-- [label]="student?.FirstName.charAt(0).toUpperCase()" -->
+                        <p-avatar [image]="user?.Picture" styleClass="mr-2" size="large"
+                            styleClass="bg-blue-500 text-gray-200" shape="circle" />
                     </td>
                     <td class="text-gray-800">{{ user?.FullName }}</td>
                     <td class="font-medium text-gray-700">{{ user?.UserName }}</td>
@@ -102,7 +110,7 @@
                     <td class="text-gray-600">
                         {{ user?.LastPwdChangedDate | date:'MM-dd-yyyy HH:mm:ss' }}
                     </td>
-                    
+
 
                     <!-- <td class="text-gray-600">
                         {{ user?.CreatedDate | date:'MM-dd-yyyy HH:mm:ss' }}

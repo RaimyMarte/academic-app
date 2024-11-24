@@ -5,11 +5,11 @@ import { HomeComponent } from './home/home.component';
 import { NonAuthGuard } from './non-auth.guard';
 import { LoginComponent } from './pages/auth/login/login.component';
 import { ProfessorDashboardComponent } from './pages/professor-dashboard/professor-dashboard.component';
-import { StudentListComponent } from './pages/student/student-list/student-list.component';
 import { SubjectsListComponent } from './pages/subjects/subjects-list/subjects-list.component';
 import { ProfileComponent } from './pages/user/profile/profile.component';
 import { UserListComponent } from './pages/user/user-list/user-list.component';
 import { LayoutComponent } from './ui/layout/layout.component';
+import { StudentsListComponent } from './pages/student/student-list/student-list.component';
 
 export const routes: Routes = [
   {
@@ -40,7 +40,7 @@ export const routes: Routes = [
       },
       {
         path: 'students',
-        component: StudentListComponent,
+        component: StudentsListComponent,
         canActivate: [AuthGuard],
         // data: { roles: ['professor', 'admin'] }
       },
