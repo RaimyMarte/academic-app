@@ -28,8 +28,18 @@ export class StudentService {
     ) { }
 
 
-    async getStudents({ currentPage, currentPageSize, search }: PaginationQuery) {
-        const response = await this.apiService.get(`/student_get_all?page=${currentPage}&pageSize=${currentPageSize}&search=${search}`, this.authService.authHeader());
+    async getStudents(query: PaginationQuery & {
+        [key: string]: any;
+    }) {
+        const queryParams = new URLSearchParams();
+
+        Object.entries(query).forEach(([key, value]) => {
+            if (value !== undefined && value !== null) {
+                queryParams.append(key, value instanceof Date ? value.toISOString() : value.toString());
+            }
+        });
+
+        const response = await this.apiService.get(`/student_get_all?${queryParams.toString()}`, this.authService.authHeader());
         const students = response?.data as Student[];
 
         return {
@@ -37,6 +47,7 @@ export class StudentService {
             total: response?.total
         };
     }
+
 
     async getStudentById(studentId: string) {
         const response = await this.apiService.get(`/student_by_id/${studentId}`, this.authService.authHeader());

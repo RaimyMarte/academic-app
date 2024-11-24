@@ -40,6 +40,7 @@ export class StudentsListComponent implements OnInit {
 
   totalStudents: number = 0;
   searchTerm: string = ''
+  currentFilters: Record<string, any> = {};
 
   @ViewChild(StudentDialogComponent) StudentDialogComponent!: StudentDialogComponent;
   @ViewChild(StudentFilterComponent) studentFilterComponent!: StudentFilterComponent;
@@ -56,15 +57,21 @@ export class StudentsListComponent implements OnInit {
     const rowsPerPage = this.paginationService.getItemsPerPage();
     this.searchTerm = this.searchService.getSearchTerm();
 
-    await this.loadStudents({ currentPage: currentPage, currentPageSize: rowsPerPage, search: this.searchTerm });
+    await this.loadStudents({
+      currentPage,
+      currentPageSize: rowsPerPage,
+      search: this.searchTerm,
+      ...this.currentFilters,
+    });
   }
 
-  async loadStudents({ currentPage, currentPageSize, search }: PaginationQuery) {
-    const { students, total: totalStudents } = await this.studentService.getStudents({ currentPage, currentPageSize, search });
+  async loadStudents(query: PaginationQuery) {
+    const { students, total: totalStudents } = await this.studentService.getStudents(query);
 
-    this.students = students
+    this.students = students;
     this.totalStudents = totalStudents;
   }
+
 
   paginate(event: PageChangeEvent) {
     const { currentPage, rowsPerPage } = getPageChangeDetails(event);
@@ -86,6 +93,18 @@ export class StudentsListComponent implements OnInit {
     this.searchTerm = ''
 
     this.loadStudents({ currentPage: 1, currentPageSize: rowsPerPage, search: '' });
+  }
+
+  onFilterApplied(filters: Record<string, any>) {
+    this.currentFilters = filters;
+    const rowsPerPage = this.paginationService.getItemsPerPage();
+
+    this.loadStudents({
+      currentPage: 1,
+      currentPageSize: rowsPerPage,
+      search: this.searchTerm,
+      ...this.currentFilters,
+    });
   }
 
   editStudent(Student: Student) {

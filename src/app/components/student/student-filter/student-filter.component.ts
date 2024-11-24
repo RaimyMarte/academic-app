@@ -1,16 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, signal } from '@angular/core';
+import { Component, EventEmitter, Input, Output, signal } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
+import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { SidebarModule } from 'primeng/sidebar';
 import { MaintenanceService } from '../../../../services/maintenance/maintenance.service';
-import { StudentService } from '../../../../services/student/student.service';
 import { Maintenance } from '../../../../types/maintenance';
-import { Student } from '../../../../types/student';
-import { InputNumberModule } from 'primeng/inputnumber';
 
 @Component({
   selector: 'app-student-filter',
@@ -28,8 +26,7 @@ export class StudentFilterComponent {
     { Id: 'U', Name: 'Unknown' },
   ];
 
-  @Input() student: Partial<Student> = {};
-  @Input() initializeStudentList!: () => void;
+  @Output() filterApplied = new EventEmitter<any>();
 
   studentFilterForm = signal<FormGroup>(
     new FormGroup({
@@ -65,21 +62,12 @@ export class StudentFilterComponent {
 
   resetFilter() {
     this.studentFilterForm().reset();
-    this.studentFilterSidebar = true;
+
+    const formData = this.studentFilterForm().value
+    this.filterApplied.emit(formData); 
+
+    this.studentFilterSidebar = false;
   }
-
-
-  // this.studentFilterForm().patchValue({
-  //   FirstName: student.FirstName || '',
-  //   LastName: student.LastName || '',
-  //   Code: student.Code || '',
-  //   DateOfBirth: student.DateOfBirth || '',
-  //   Address: student.Address,
-  //   NationalityId: student.NationalityId || null,
-  //   Gender: student.Gender || null,
-  //   PhoneNumber: student.PhoneNumber || '',
-  //   EmailAddress: student.EmailAddress || '',
-  // });
 
 
   hideFilterSidebar() {
@@ -92,11 +80,8 @@ export class StudentFilterComponent {
 
     if (this.studentFilterForm().valid) {
       const formData = this.studentFilterForm().value
-
-      console.log(formData)
-
-      // this.initializeStudentList()
-      // this.hideFilterSidebar()
+      this.filterApplied.emit(formData); 
+      this.hideFilterSidebar();
     }
   }
 }
