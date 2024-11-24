@@ -10,6 +10,7 @@ import { StudentSubjectPickListComponent } from './pages/subjects/student-subjec
 import { SubjectsListComponent } from './pages/subjects/subjects-list/subjects-list.component';
 import { UserListComponent } from './pages/user/user-list/user-list.component';
 import { LayoutComponent } from './ui/layout/layout.component';
+import { SubjectAttendanceComponent } from './pages/subjects/subject-attendance/subject-attendance.component';
 
 export const routes: Routes = [
   {
@@ -38,7 +39,13 @@ export const routes: Routes = [
         component: StudentSubjectPickListComponent,
         canActivate: [AuthGuard],
         // data: { roles: ['professor', 'admin'] }
-      },      
+      },     
+      {
+        path: 'subjects/attendance/:subjectId', 
+        component: SubjectAttendanceComponent,
+        canActivate: [AuthGuard],
+        // data: { roles: ['professor', 'admin'] }
+      },    
       {
         path: 'students',
         component: StudentsListComponent,

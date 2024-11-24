@@ -56,7 +56,7 @@ export class SidebarContentComponent {
       },
       {
         label: 'Students',
-        icon: 'pi pi-users',
+        icon: 'pi pi-address-book',
         routerLink: '/students',
         visible: this.currentUser?.UserRoleId === 1
       },

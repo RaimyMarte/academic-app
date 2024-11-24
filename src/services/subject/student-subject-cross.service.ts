@@ -1,20 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Subject } from '../../types/subject';
+import { Student } from '../../types/student';
 import { ApiService } from '../api/api.service';
 import { AuthService } from '../auth/auth.service';
-import { PaginationQuery } from '../../types/paginationQuery';
-import { StudentSubjectCross } from '../../types/studentSubjectCross';
 
-// interface SubjectBody {
-//     Code?: string | null;
-//     Name: string;
-//     Description?: string | null;
-//     Enabled: boolean;
-//     StatusId: number;
-//     StartDate: string;
-//     ProfessorId?: string | null,
-//     EndDate: string;
-// }
+interface SaveSubjectEnrollmentBody {
+    SubjectId: string;
+    EnrollStudents: string[];
+    NotEnrollStudents: string[];
+}
 
 @Injectable({
     providedIn: 'root'
@@ -26,21 +19,21 @@ export class StudentSubjectCrossService {
         private authService: AuthService
     ) { }
 
-    async getEnrolledStudents(studentId: string) {
-        const response = await this.apiService.get(`/students_in_subject/${studentId}`, this.authService.authHeader());
-        const data = response?.data as StudentSubjectCross[];
+    async getEnrolledStudents(subjectId: string) {
+        const response = await this.apiService.get(`/students_in_subject/${subjectId}`, this.authService.authHeader());
+        const data = response?.data as Student[];
 
         return data
     }
 
-    async getStudentsNotEnrolled(studentId: string) {
-        const response = await this.apiService.get(`/students_out_subject/${studentId}`, this.authService.authHeader());
-        const data = response?.data as StudentSubjectCross[];
+    async getStudentsNotEnrolled(subjectId: string) {
+        const response = await this.apiService.get(`/students_out_subject/${subjectId}`, this.authService.authHeader());
+        const data = response?.data as Student[];
 
         return data
     }
 
-    async saveSubjectEnrollment(body: any) {
+    async saveSubjectEnrollment(body: SaveSubjectEnrollmentBody) {
         await this.apiService.post('/save_subject_enrollment', body, this.authService.authHeader());
     }
 

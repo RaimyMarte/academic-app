@@ -1,17 +1,17 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ConfirmationService } from 'primeng/api';
 import { AvatarModule } from 'primeng/avatar';
 import { ButtonModule } from 'primeng/button';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { PickListModule } from 'primeng/picklist';
 import { TagModule } from 'primeng/tag';
 import { TooltipModule } from 'primeng/tooltip';
 import { StudentSubjectCrossService } from '../../../../services/subject/student-subject-cross.service';
-import { StudentSubjectCross } from '../../../../types/studentSubjectCross';
 import { SubjectService } from '../../../../services/subject/subject.service';
+import { Student } from '../../../../types/student';
 import { Subject } from '../../../../types/subject';
-import { CommonModule } from '@angular/common';
-import { ConfirmationService } from 'primeng/api';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @Component({
   selector: 'app-student-subject-pick-list',
@@ -25,8 +25,8 @@ export class StudentSubjectPickListComponent implements OnInit {
   enrollStudentsDialog: boolean = false;
   subjectId: string | null = ''
   subject!: Subject | null
-  enrolledStudents!: StudentSubjectCross[];
-  notEnrolledStudents!: StudentSubjectCross[];
+  enrolledStudents!: Student[];;
+  notEnrolledStudents!: Student[];;
 
   constructor(private studentSubjectCrossService: StudentSubjectCrossService, private confirmationService: ConfirmationService, private subjectService: SubjectService, private route: ActivatedRoute) { }
 
@@ -43,14 +43,14 @@ export class StudentSubjectPickListComponent implements OnInit {
       message: 'Do you want to save the changes?',
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
-      acceptButtonStyleClass:"p-button-primary",
-      rejectButtonStyleClass:"p-button-secondary p-button-text",
+      acceptButtonStyleClass: "p-button-primary",
+      rejectButtonStyleClass: "p-button-secondary p-button-text",
       accept: () => {
         const enrolledStudensIds = this.enrolledStudents.map((entry) => entry?.Id)
         const notEnrolledStudensIds = this.notEnrolledStudents.map((entry) => entry?.Id)
 
         this.studentSubjectCrossService.saveSubjectEnrollment({
-          SubjectId: this.subjectId,
+          SubjectId: this.subjectId || '',
           EnrollStudents: enrolledStudensIds,
           NotEnrollStudents: notEnrolledStudensIds
         });
