@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Maintenance } from '../../types/maintenance';
 import { ApiService } from '../api/api.service';
 import { AuthService } from '../auth/auth.service';
 
@@ -14,7 +13,7 @@ export class MaintenanceService {
     ) { }
 
     async getSelectedMaintenances(selectedMaintenances: string[]) {
-        const response = await this.apiService.post('/get_all_selected_maintenances', { selectedMaintenances }, this.authService.authHeader());
+        const response = await this.apiService.get(`/get_all_selected_maintenances?selectedMaintenances=${selectedMaintenances}`, this.authService.authHeader());
 
         const maintenaces = response?.data;
 

@@ -10,6 +10,8 @@
     <ng-template pTemplate="left">
       <p-button severity="primary" label="New student" icon="pi pi-plus" class="mr-4 shadow-md hover:shadow-lg"
         (onClick)="openNew()"></p-button>
+        <p-button severity="contrast" label="Filters" icon="pi pi-filter" class="mr-4 shadow-md hover:shadow-lg"
+        (onClick)="openFilterSidebar()"></p-button>
     </ng-template>
   </p-toolbar>
 
@@ -124,4 +126,5 @@
 
 
 <app-student-dialog [student]="student" [initializeStudentList]="initializeStudentList"></app-student-dialog>
+<app-student-filter [initializeStudentList]="initializeStudentList"></app-student-filter>
 <p-confirmDialog [style]="{ width: '450px' }" />

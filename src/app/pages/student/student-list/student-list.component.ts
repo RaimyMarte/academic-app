@@ -22,11 +22,12 @@ import { Student } from '../../../../types/student';
 import { getPageChangeDetails } from '../../../../utils/getPageChangeDetails';
 import { StudentDialogComponent } from '../../../components/student/student-dialog/student-dialog.component';
 import { AvatarModule } from 'primeng/avatar';
+import { StudentFilterComponent } from '../../../components/student/student-filter/student-filter.component';
 
 @Component({
   selector: 'app-student-list',
   standalone: true,
-  imports: [TableModule, DialogModule, AvatarModule, StudentDialogComponent, TooltipModule, RippleModule, ButtonModule, ToastModule, ToolbarModule, ConfirmDialogModule, InputTextModule, CommonModule, DropdownModule, TagModule, InputTextModule, FormsModule,],
+  imports: [TableModule, DialogModule, StudentFilterComponent, AvatarModule, StudentDialogComponent, TooltipModule, RippleModule, ButtonModule, ToastModule, ToolbarModule, ConfirmDialogModule, InputTextModule, CommonModule, DropdownModule, TagModule, InputTextModule, FormsModule,],
   providers: [ConfirmationService],
   templateUrl: './student-list.component.html',
   styleUrl: './student-list.component.css'
@@ -41,6 +42,7 @@ export class StudentsListComponent implements OnInit {
   searchTerm: string = ''
 
   @ViewChild(StudentDialogComponent) StudentDialogComponent!: StudentDialogComponent;
+  @ViewChild(StudentFilterComponent) studentFilterComponent!: StudentFilterComponent;
 
 
   constructor(private studentService: StudentService, private confirmationService: ConfirmationService, public paginationService: PaginationService, private searchService: SearchService) { }
@@ -54,7 +56,6 @@ export class StudentsListComponent implements OnInit {
     const rowsPerPage = this.paginationService.getItemsPerPage();
     this.searchTerm = this.searchService.getSearchTerm();
 
-    // Call loadStudents to load the data with the current page, page size, and search term
     await this.loadStudents({ currentPage: currentPage, currentPageSize: rowsPerPage, search: this.searchTerm });
   }
 
@@ -95,13 +96,17 @@ export class StudentsListComponent implements OnInit {
     this.StudentDialogComponent.openNew()
   }
 
+  openFilterSidebar() {
+    this.studentFilterComponent.openFilterSidebar()
+  }
+
   deleteStudent(student: Student) {
     this.confirmationService.confirm({
       message: 'Are you sure you want to delete ' + student?.FullName + '?',
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
-      acceptButtonStyleClass:"p-button-primary",
-      rejectButtonStyleClass:"p-button-secondary p-button-text",
+      acceptButtonStyleClass: "p-button-primary",
+      rejectButtonStyleClass: "p-button-secondary p-button-text",
       accept: () => {
         this.studentService.deleteStudent(student?.Id);
         this.initializeStudentList()

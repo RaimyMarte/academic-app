@@ -58,7 +58,6 @@ export class StudentDialogComponent {
     const selectedMaintenances = ['Nationality']
     const data = await this.maintenanceService.getSelectedMaintenances(selectedMaintenances);
     this.nationalities = data?.Nationality
-    console.log(this.genderOptions)
   }
 
   openNew() {
