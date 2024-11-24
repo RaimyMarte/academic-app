@@ -10,7 +10,6 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RippleModule } from 'primeng/ripple';
 import { SubjectService } from '../../../../services/subject/subject.service';
 import { UserService } from '../../../../services/user/user.service';
-import { Maintenance } from '../../../../types/maintenance';
 import { Subject } from '../../../../types/subject';
 import { User } from '../../../../types/user';
 
@@ -82,7 +81,7 @@ export class SubjectDialogComponent {
     this.createMode = false
   }
 
-  saveSubject() {
+  async saveSubject() {
     this.submitted = true;
 
     if (this.subjectForm().valid) {

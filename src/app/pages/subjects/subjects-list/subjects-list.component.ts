@@ -28,7 +28,7 @@ import { AuthService } from '../../../../services/auth/auth.service';
   selector: 'app-subjects-list',
   standalone: true,
   imports: [TableModule, DialogModule, RouterModule, SubjectDialogComponent, TooltipModule, RippleModule, ButtonModule, ToastModule, ToolbarModule, ConfirmDialogModule, InputTextModule, CommonModule, DropdownModule, TagModule, InputTextModule, FormsModule,],
-  providers: [ConfirmationService],
+  providers: [ConfirmationService,],
   templateUrl: './subjects-list.component.html',
   styleUrl: './subjects-list.component.css',
 })

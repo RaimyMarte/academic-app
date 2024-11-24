@@ -129,6 +129,9 @@
 </div>
 
 
+<div *ngIf="currentUserRole == 1">
+  <app-subject-dialog [subject]="subject" [initializeSubjectList]="initializeSubjectList"></app-subject-dialog>
+</div>
 
-<app-subject-dialog [subject]="subject" [initializeSubjectList]="initializeSubjectList"></app-subject-dialog>
+
 <p-confirmDialog [style]="{ width: '450px' }" />
