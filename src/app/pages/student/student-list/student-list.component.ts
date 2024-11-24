@@ -10,7 +10,6 @@ import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
-import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TooltipModule } from 'primeng/tooltip';
 import { StudentService } from '../../../../services/student/student.service';
@@ -27,7 +26,7 @@ import { StudentFilterComponent } from '../../../components/student/student-filt
 @Component({
   selector: 'app-student-list',
   standalone: true,
-  imports: [TableModule, DialogModule, StudentFilterComponent, AvatarModule, StudentDialogComponent, TooltipModule, RippleModule, ButtonModule, ToastModule, ToolbarModule, ConfirmDialogModule, InputTextModule, CommonModule, DropdownModule, TagModule, InputTextModule, FormsModule,],
+  imports: [TableModule, DialogModule, StudentFilterComponent, AvatarModule, StudentDialogComponent, TooltipModule, RippleModule, ButtonModule, ToolbarModule, ConfirmDialogModule, InputTextModule, CommonModule, DropdownModule, TagModule, InputTextModule, FormsModule,],
   providers: [ConfirmationService],
   templateUrl: './student-list.component.html',
   styleUrl: './student-list.component.css'

@@ -139,8 +139,10 @@ export class UserDialogComponent implements OnInit {
         this.userService.createUser(formData);
       }
 
-      this.initializeUserList()
-      this.hideDialog()
+      setTimeout(() => {
+        this.initializeUserList()
+        this.hideDialog()
+      })
     }
   }
 }

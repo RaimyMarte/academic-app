@@ -10,7 +10,6 @@ import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
-import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TooltipModule } from 'primeng/tooltip';
 import { SubjectService } from '../../../../services/subject/subject.service';
@@ -27,7 +26,7 @@ import { AuthService } from '../../../../services/auth/auth.service';
 @Component({
   selector: 'app-subjects-list',
   standalone: true,
-  imports: [TableModule, DialogModule, RouterModule, SubjectDialogComponent, TooltipModule, RippleModule, ButtonModule, ToastModule, ToolbarModule, ConfirmDialogModule, InputTextModule, CommonModule, DropdownModule, TagModule, InputTextModule, FormsModule,],
+  imports: [TableModule, DialogModule, RouterModule, SubjectDialogComponent, TooltipModule, RippleModule, ButtonModule, ToolbarModule, ConfirmDialogModule, InputTextModule, CommonModule, DropdownModule, TagModule, InputTextModule, FormsModule,],
   providers: [ConfirmationService,],
   templateUrl: './subjects-list.component.html',
   styleUrl: './subjects-list.component.css',

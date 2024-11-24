@@ -109,8 +109,10 @@ export class StudentDialogComponent {
         this.studentService.createStudent(formData);
       }
 
-      this.initializeStudentList()
-      this.hideDialog()
+      setTimeout(() => {
+        this.initializeStudentList()
+        this.hideDialog()
+      })
     }
   }
 }

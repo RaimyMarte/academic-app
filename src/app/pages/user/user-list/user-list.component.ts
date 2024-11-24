@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, signal, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ConfirmationService } from 'primeng/api';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AvatarModule } from 'primeng/avatar';
 import { ButtonModule } from 'primeng/button';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { CheckboxModule } from 'primeng/checkbox';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { FileUploadModule } from 'primeng/fileupload';
@@ -15,8 +15,8 @@ import { RatingModule } from 'primeng/rating';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
-import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
+import { TooltipModule } from 'primeng/tooltip';
 import { PaginationService } from '../../../../services/ui/pagination.service';
 import { SearchService } from '../../../../services/ui/seach.service';
 import { UserService } from '../../../../services/user/user.service';
@@ -24,11 +24,7 @@ import { PageChangeEvent } from '../../../../types/pageChangeEvent';
 import { PaginationQuery } from '../../../../types/paginationQuery';
 import { User } from '../../../../types/user';
 import { getPageChangeDetails } from '../../../../utils/getPageChangeDetails';
-import { MaintenanceService } from '../../../../services/maintenance/maintenance.service';
-import { TooltipModule } from 'primeng/tooltip';
-import { CheckboxModule } from 'primeng/checkbox';
 import { UserDialogComponent } from '../../../components/user/user-dialog/user-dialog.component';
-import { AvatarModule } from 'primeng/avatar';
 
 export interface CustomUser extends Partial<User> {
   AutomaticPassword?: boolean;
@@ -39,7 +35,7 @@ export interface CustomUser extends Partial<User> {
 @Component({
   selector: 'app-user-list',
   standalone: true,
-  imports: [TableModule, ReactiveFormsModule, AvatarModule, DialogModule, TooltipModule, CheckboxModule, RippleModule, ButtonModule, ToastModule, ToolbarModule, InputTextModule, InputTextareaModule, CommonModule, FileUploadModule, DropdownModule, TagModule, RadioButtonModule, RatingModule, InputTextModule, FormsModule, InputNumberModule, UserDialogComponent],
+  imports: [TableModule, ReactiveFormsModule, AvatarModule, DialogModule, TooltipModule, CheckboxModule, RippleModule, ButtonModule, ToolbarModule, InputTextModule, InputTextareaModule, CommonModule, FileUploadModule, DropdownModule, TagModule, RadioButtonModule, RatingModule, InputTextModule, FormsModule, InputNumberModule, UserDialogComponent],
   providers: [],
   templateUrl: './user-list.component.html',
   styleUrl: './user-list.component.css'

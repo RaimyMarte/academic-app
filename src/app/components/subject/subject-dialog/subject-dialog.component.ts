@@ -93,8 +93,10 @@ export class SubjectDialogComponent {
         this.subjectService.createSubject(formData);
       }
 
-      this.initializeSubjectList()
-      this.hideDialog()
+      setTimeout(() => {
+        this.initializeSubjectList()
+        this.hideDialog()
+      })
     }
   }
 }
