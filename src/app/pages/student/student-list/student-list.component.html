@@ -57,6 +57,7 @@
           </th>
           <th class="font-semibold text-gray-700">Age / Gender</th>
           <th class="font-semibold text-gray-700">Email / Phone</th>
+          <th class="font-semibold text-gray-700">Nationality</th>
           <th class="font-semibold text-gray-700">Parent</th>
           <th class="font-semibold text-gray-700">
             Created
@@ -94,6 +95,9 @@
             {{ student?.EmailAddress }}
             <br>
             {{ student?.PhoneNumber }}
+          </td>
+          <td class="text-gray-600">
+            {{ student?.Nationality?.Name }}
           </td>
           <td class="text-gray-600">
             {{ student?.ParentName }}

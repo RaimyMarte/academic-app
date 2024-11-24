@@ -77,14 +77,14 @@ export class StudentsListComponent implements OnInit {
     const { currentPage, rowsPerPage } = getPageChangeDetails(event);
 
     this.paginationService.onPageEvent(currentPage, rowsPerPage);
-    this.loadStudents({ currentPage, currentPageSize: rowsPerPage, search: this.searchTerm });
+    this.loadStudents({ currentPage, currentPageSize: rowsPerPage, search: this.searchTerm, ...this.currentFilters, });
   }
 
   onSearch() {
     this.searchService.onSearchEvent(this.searchTerm);
     const rowsPerPage = this.paginationService.getItemsPerPage();
 
-    this.loadStudents({ currentPage: 1, currentPageSize: rowsPerPage, search: this.searchTerm });
+    this.loadStudents({ currentPage: 1, currentPageSize: rowsPerPage, search: this.searchTerm, ...this.currentFilters, });
   }
 
   onResetSearch() {

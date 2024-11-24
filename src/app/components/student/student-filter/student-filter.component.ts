@@ -33,12 +33,8 @@ export class StudentFilterComponent {
     new FormGroup({
       firstName: new FormControl(''),
       lastName: new FormControl(''),
-      minAge: new FormControl(),
-      maxAge: new FormControl(),
       gender: new FormControl(''),
       nationalityId: new FormControl(''),
-      createdBefore: new FormControl(''),
-      createdAfter: new FormControl(''),
       emailAddress: new FormControl(''),
       phoneNumber: new FormControl(''),
       code: new FormControl(''),

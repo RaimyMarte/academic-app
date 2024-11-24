@@ -27,24 +27,6 @@
             </div>
 
             <div class="field">
-                <label for="minAge" class="block text-sm font-medium text-gray-700 mb-1">Min Age</label>
-                <span class="p-input-icon-left w-full">
-                    <i class="pi pi-info-circle"></i>
-                    <input type="number" pInputText id="minAge" formControlName="minAge" class="w-full p-inputtext-sm"
-                        placeholder="Enter min age" />
-                </span>
-            </div>
-
-            <div class="field">
-                <label for="maxAge" class="block text-sm font-medium text-gray-700 mb-1">Max Age</label>
-                <span class="p-input-icon-left w-full">
-                    <i class="pi pi-info-circle"></i>
-                    <input type="number" pInputText id="maxAge" formControlName="maxAge" class="w-full p-inputtext-sm"
-                        placeholder="Enter max and" />
-                </span>
-            </div>
-
-            <div class="field">
                 <label for="gender" class="block text-sm font-medium text-gray-700 mb-1">Gender</label>
                 <p-dropdown [options]="genderOptions" formControlName="gender" [filter]="true" filterBy="Name"
                     optionLabel="Name" placeholder="Select gender" optionValue="Id" styleClass="w-full p-inputtext-sm"
@@ -58,24 +40,6 @@
                     optionLabel="Name" placeholder="Select nationality" optionValue="Id"
                     styleClass="w-full p-inputtext-sm" [panelStyleClass]="'text-sm'" [showClear]="true">
                 </p-dropdown>
-            </div>
-
-            <div class="field">
-                <label for="createdBefore" class="block text-gray-700 font-medium mb-2">Created Before</label>
-                <span class="p-input-icon-left w-full">
-                    <i class="pi pi-calendar"></i>
-                    <input type="date" pInputText id="createdBefore" formControlName="createdBefore"
-                        class="w-full p-inputtext-sm" placeholder="Enter createdBefore" />
-                </span>
-            </div>
-
-            <div class="field">
-                <label for="createdAfter" class="block text-gray-700 font-medium mb-2">Created After</label>
-                <span class="p-input-icon-left w-full">
-                    <i class="pi pi-calendar"></i>
-                    <input type="date" pInputText id="createdAfter" formControlName="createdAfter"
-                        class="w-full p-inputtext-sm" placeholder="Enter createdAfter" />
-                </span>
             </div>
 
             <div class="field">
