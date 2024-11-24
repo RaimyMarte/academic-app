@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-import { LoginComponent } from './pages/auth/login/login.component';
-import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
-import { ProfileComponent } from './pages/user/profile/profile.component';
-import { LayoutComponent } from './ui/layout/layout.component';
-import { ProfessorDashboardComponent } from './pages/professor-dashboard/professor-dashboard.component';
-import { SubjectsListComponent } from './pages/subjects/subjects-list/subjects-list.component';
 import { AuthGuard } from '../services/auth/auth.guard';
+import { HomeComponent } from './home/home.component';
 import { NonAuthGuard } from './non-auth.guard';
+import { LoginComponent } from './pages/auth/login/login.component';
+import { ProfessorDashboardComponent } from './pages/professor-dashboard/professor-dashboard.component';
 import { StudentListComponent } from './pages/student/student-list/student-list.component';
+import { SubjectsListComponent } from './pages/subjects/subjects-list/subjects-list.component';
+import { ProfileComponent } from './pages/user/profile/profile.component';
+import { UserListComponent } from './pages/user/user-list/user-list.component';
+import { LayoutComponent } from './ui/layout/layout.component';
 
 export const routes: Routes = [
   {
@@ -45,8 +45,8 @@ export const routes: Routes = [
         // data: { roles: ['professor', 'admin'] }
       },
       {
-        path: 'admin',
-        component: AdminDashboardComponent,
+        path: 'users',
+        component: UserListComponent,
         canActivate: [AuthGuard],
         // data: { roles: ['admin'] }
       },

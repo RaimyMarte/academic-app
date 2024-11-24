@@ -2,26 +2,27 @@ import { Injectable } from '@angular/core';
 import { User } from '../../types/user';
 import { AuthService } from '../auth/auth.service';
 import { ApiService } from '../api/api.service';
+import { PaginationQuery } from '../../types/paginationQuery';
 
-interface CreateUserBody {
-    Email: string
-    FirstName: string
-    LastName: string
-    Phone: string
-    ChangePwdNextLogin: boolean
-    AutomaticPassword: boolean
-    Password: string
-    ConfirmPassword: string
-    UserRoleId: number
-}
+// interface CreateUserBody {
+//     Email: string
+//     FirstName: string
+//     LastName: string
+//     Phone: string
+//     ChangePwdNextLogin: boolean
+//     AutomaticPassword: boolean
+//     Password: string
+//     ConfirmPassword: string
+//     UserRoleId: number
+// }
 
-interface UpdateUserBody {
-    Email: string
-    FirstName: string
-    LastName: string
-    UserName: string
-    UserId: string
-}
+// interface UpdateUserBody {
+//     Email: string
+//     FirstName: string
+//     LastName: string
+//     UserName: string
+//     UserId: string
+// }
 
 @Injectable({
     providedIn: 'root'
@@ -33,10 +34,14 @@ export class UserService {
         private authService: AuthService
     ) { }
 
-    async getUsers() {
-        const response = await this.apiService.get('/get_users', this.authService.authHeader());
+    async getUsers({ currentPage, currentPageSize, search }: PaginationQuery) {
+        const response = await this.apiService.get(`/get_users?page=${currentPage}&pageSize=${currentPageSize}&search=${search}`, this.authService.authHeader());
         const users = response?.data as User[];
-        return users;
+
+        return {
+            users,
+            total: response?.total
+        };
     }
 
     async getProfessors() {
@@ -52,12 +57,20 @@ export class UserService {
         return user;
     }
 
-    async createUser(body: CreateUserBody) {
+    async createUser(body: any) {
         await this.apiService.post('/create_user', body, this.authService.authHeader());
     }
 
 
-    async updateUser(body: UpdateUserBody) {
+    async updateUser(body: any) {
         await this.apiService.patch('/update_user', body, this.authService.authHeader());
     }
+
+    async adminResetPassword(body: any) {
+        const response = await this.apiService.post('/auth/admin_reset_password', body, this.authService.authHeader());
+        const data = response?.data;
+
+        return data;
+    }
+
 }

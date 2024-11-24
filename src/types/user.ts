@@ -3,8 +3,10 @@ export interface User {
   FirstName: string;
   LastName: string;
   UserName: string;
+  FullName: string;
   Gender: string;
   Email: string;
+  Phone: string;
   ChangePwdNextLogin: boolean;
   LastPwdChangedDate: Date | null;
   UserRoleId: number;
@@ -20,4 +22,7 @@ export interface User {
   LastIpAccess: string | null;
   LastAccessDate: Date | null;
   Picture: string | null;
+  UserRole: {
+    Name: string
+  } | null
 }

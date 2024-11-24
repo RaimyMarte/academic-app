@@ -1,0 +1,153 @@
+<p-dialog [(visible)]="userDialog" [style]="{ width: '650px' }" header="user Details" [modal]="true"
+    styleClass="p-fluid bg-white rounded-lg shadow-lg" [breakpoints]="{'960px': '75vw', '640px': '90vw'}"
+    [draggable]="false" [resizable]="false" (onHide)="hideDialog()">
+
+    <ng-template pTemplate="header">
+        <div class="flex items-center gap-2 text-xl font-semibold text-gray-800">
+            <i class="pi pi-book"></i>
+            <span>User Details</span>
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="content">
+        <form [formGroup]="userForm()" (ngSubmit)="saveUser()" novalidate>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 p-4">
+                <div class="field" *ngIf="createMode || updateMode">
+                    <label for="FirstName" class="block text-gray-700 font-medium mb-2">First Name *</label>
+                    <span class="p-input-icon-left w-full">
+                        <i class="pi pi-info-circle"></i>
+                        <input type="text" pInputText id="FirstName" formControlName="FirstName"
+                            [ngClass]="{ 'ng-invalid ng-dirty': submitted && userForm().get('FirstName')?.invalid }"
+                            class="w-full p-inputtext-sm" placeholder="Enter user FirstName" />
+                    </span>
+                    <small class="p-error block mt-1" *ngIf="submitted && userForm().get('FirstName')?.invalid">
+                        <i class="pi pi-exclamation-circle mr-1"></i>First Name is required
+                    </small>
+                </div>
+
+                <div class="field" *ngIf="createMode || updateMode">
+                    <label for="LastName" class="block text-gray-700 font-medium mb-2">Last Name *</label>
+                    <span class="p-input-icon-left w-full">
+                        <i class="pi pi-info-circle"></i>
+                        <input type="text" pInputText id="LastName" formControlName="LastName"
+                            [ngClass]="{ 'ng-invalid ng-dirty': submitted && userForm().get('LastName')?.invalid }"
+                            class="w-full p-inputtext-sm" placeholder="Enter user LastName" />
+                    </span>
+                    <small class="p-error block mt-1" *ngIf="submitted && userForm().get('LastName')?.invalid">
+                        <i class="pi pi-exclamation-circle mr-1"></i>Last Name is required
+                    </small>
+                </div>
+
+                <div class="field" *ngIf="createMode || updateMode">
+                    <label for="UserName" class="block text-gray-700 font-medium mb-2">Username *</label>
+                    <span class="p-input-icon-left w-full">
+                        <i class="pi pi-info-circle"></i>
+                        <input type="text" pInputText id="UserName" formControlName="UserName"
+                            [ngClass]="{ 'ng-invalid ng-dirty': submitted && userForm().get('UserName')?.invalid }"
+                            class="w-full p-inputtext-sm" placeholder="Enter user UserName" />
+                    </span>
+                    <small class="p-error block mt-1" *ngIf="submitted && userForm().get('UserName')?.invalid">
+                        <i class="pi pi-exclamation-circle mr-1"></i>Username is required
+                    </small>
+                </div>
+
+                <div class="field" *ngIf="createMode || updateMode">
+                    <label for="UserRoleId" class="block text-gray-700 font-medium mb-2">User Role</label>
+                    <p-dropdown [options]="userRoles" formControlName="UserRoleId" [filter]="true" filterBy="Name"
+                        optionLabel="Name" placeholder="Select a UserRole" optionValue="Id" required
+                        styleClass="w-full p-inputtext-sm" [panelStyleClass]="'text-sm'" [showClear]="true">
+                    </p-dropdown>
+                    <small class="p-error block mt-1" *ngIf="submitted && userForm().get('UserRoleId')?.invalid">
+                        <i class="pi pi-exclamation-circle mr-1"></i>User Role is required
+                    </small>
+                </div>
+
+                <div class="field" *ngIf="createMode || updateMode">
+                    <label for="Email" class="block text-gray-700 font-medium mb-2">Email Address *</label>
+                    <span class="p-input-icon-left w-full">
+                        <i class="pi pi-info-circle"></i>
+                        <input type="text" pInputText id="Email" formControlName="Email"
+                            [ngClass]="{ 'ng-invalid ng-dirty': submitted && userForm().get('Email')?.invalid }"
+                            class="w-full p-inputtext-sm" placeholder="Enter user Email" />
+                    </span>
+                    <small class="p-error block mt-1" *ngIf="submitted && userForm().get('Email')?.invalid">
+                        <i class="pi pi-exclamation-circle mr-1"></i>Email Address is required
+                    </small>
+                </div>
+
+                <div class="field" *ngIf="createMode || updateMode">
+                    <label for="Phone" class="block text-gray-700 font-medium mb-2">Phone Number</label>
+                    <span class="p-input-icon-left w-full">
+                        <i class="pi pi-tag"></i>
+                        <input type="text" pInputText id="Phone" formControlName="Phone" class="w-full p-inputtext-sm"
+                            placeholder="Enter Phone Number" />
+                    </span>
+                </div>
+
+                <div class="field" *ngIf="createMode || updateMode">
+                    <div class="flex items-center">
+                        <p-checkbox id="Authorized" formControlName="Authorized" [binary]="true"
+                            styleClass="mr-2"></p-checkbox>
+                        <label for="Authorized" class="text-gray-900 text-sm sm:text-base">Authorized</label>
+                    </div>
+                </div>
+
+                <div class="field" *ngIf="createMode || resetPasswordMode">
+                    <div class="flex items-center">
+                        <p-checkbox id="AutomaticPassword" formControlName="AutomaticPassword" [binary]="true"
+                            styleClass="mr-2"></p-checkbox>
+                        <label for="AutomaticPassword" class="text-gray-900 text-sm sm:text-base">Automatic
+                            Password</label>
+                    </div>
+                </div>
+
+                <div class="field" *ngIf="!userForm().get('AutomaticPassword')?.value && resetPasswordMode">
+                    <div class="flex items-center">
+                        <p-checkbox id="ChangePwdNextLogin" formControlName="ChangePwdNextLogin" [binary]="true"
+                            styleClass="mr-2"></p-checkbox>
+                        <label for="ChangePwdNextLogin" class="text-gray-900 text-sm sm:text-base">Change Password Next
+                            Login</label>
+                    </div>
+                </div>
+
+                <div class="field"
+                    *ngIf="!userForm().get('AutomaticPassword')?.value && (createMode || resetPasswordMode) ">
+                    <label for="Password" class="block text-gray-700 font-medium mb-2">Password*</label>
+                    <span class="p-input-icon-left w-full">
+                        <i class="pi pi-info-circle"></i>
+                        <input type="password" pInputText id="Password" formControlName="Password"
+                            [ngClass]="{ 'ng-invalid ng-dirty': submitted && userForm().get('Password')?.invalid }"
+                            class="w-full p-inputtext-sm" placeholder="Enter user Password" />
+                    </span>
+                    <small class="p-error block mt-1" *ngIf="submitted && userForm().get('Password')?.invalid">
+                        <i class="pi pi-exclamation-circle mr-1"></i>Password is required
+                    </small>
+                </div>
+
+                <div class="field"
+                    *ngIf="!userForm().get('AutomaticPassword')?.value && (createMode || resetPasswordMode)">
+                    <label for="ConfirmPassword" class="block text-gray-700 font-medium mb-2">Confirm Password*</label>
+                    <span class="p-input-icon-left w-full">
+                        <i class="pi pi-info-circle"></i>
+                        <input type="password" pInputText id="ConfirmPassword" formControlName="ConfirmPassword"
+                            [ngClass]="{ 'ng-invalid ng-dirty': submitted && userForm().get('ConfirmPassword')?.invalid }"
+                            class="w-full p-inputtext-sm" placeholder="Enter user ConfirmPassword" />
+                    </span>
+                    <small class="p-error block mt-1" *ngIf="submitted && userForm().get('ConfirmPassword')?.invalid">
+                        <i class="pi pi-exclamation-circle mr-1"></i>Confirm Password is required
+                    </small>
+                </div>
+
+
+            </div>
+            <div class="flex justify-end gap-2 px-4 py-2 mt-3">
+                <p-button label="Cancel" type="button" icon="pi pi-times" (click)="hideDialog()"
+                    styleClass="p-button-text p-button-secondary">
+                </p-button>
+                <p-button label="Save" type="submit" icon="pi pi-save" (click)="saveUser()"
+                    styleClass="p-button-success">
+                </p-button>
+            </div>
+        </form>
+    </ng-template>
+</p-dialog>

@@ -14,7 +14,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
     AppSidebar,
     RippleModule,
     RouterOutlet,
-    NavbarComponent
+    NavbarComponent,
   ],
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.css'],

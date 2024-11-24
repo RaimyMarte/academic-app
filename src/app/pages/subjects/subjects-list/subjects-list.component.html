@@ -55,7 +55,7 @@
           <th class="font-semibold text-gray-700" pSortableColumn="Professor">
             Professor <p-sortIcon field="Professor"></p-sortIcon>
           </th>
-          <th class="font-semibold text-gray-700">Description</th>
+          <!-- <th class="font-semibold text-gray-700">Description</th> -->
           <th class="font-semibold text-gray-700">
             Enabled
           </th>
@@ -65,7 +65,12 @@
           <th class="font-semibold text-gray-700" pSortableColumn="EndDate">
             End Date <p-sortIcon field="EndDate"></p-sortIcon>
           </th>
-
+          <th class="font-semibold text-gray-700">
+            Created
+          </th>
+          <th class="font-semibold text-gray-700">
+            Last Updated
+          </th>
         </tr>
       </ng-template>
 
@@ -74,22 +79,32 @@
         <tr class="hover:bg-gray-50 transition-colors duration-200">
           <td>
             <div class="flex justify-center gap-1">
-              <p-button icon="pi pi-pencil" severity="success" [rounded]="true" [text]="true"
+              <p-button pTooltip="Edit subject" icon="pi pi-pencil" severity="success" [rounded]="true" [text]="true"
                 (onClick)="editSubject(subject)"></p-button>
-              <p-button icon="pi pi-trash" severity="danger" [rounded]="true" [text]="true"
+              <p-button pTooltip="Delete subject" icon="pi pi-trash" severity="danger" [rounded]="true" [text]="true"
                 (onClick)="deleteSubject(subject)"></p-button>
             </div>
           </td>
           <td class="font-medium text-gray-700">{{ subject?.Code }}</td>
           <td class="text-gray-800">{{ subject?.Name }}</td>
           <td class="text-gray-800">{{ subject?.Professor?.FullName }}</td>
-          <td class="text-gray-600">{{ subject?.Description }}</td>
+          <!-- <td class="text-gray-600">{{ subject?.Description }}</td> -->
           <td>
             <p-tag [value]="subject?.Enabled ? 'Active' : 'Inactive'"
               [severity]="subject?.Enabled ? 'success' : 'danger'" [rounded]="true"></p-tag>
           </td>
           <td>{{ subject?.StartDate | date:'mediumDate' }}</td>
           <td>{{ subject?.EndDate | date:'mediumDate' }}</td>
+          <td class="text-gray-600">
+            {{ subject?.CreatedDate | date:'MM-dd-yyyy HH:mm:ss' }}
+            <br>
+            {{ subject?.SubjectCreatedBy?.FullName }}
+          </td>
+          <td class="text-gray-600">
+            {{ subject?.LastUpdatedDate | date:'MM-dd-yyyy HH:mm:ss' }}
+            <br>
+            {{ subject?.SubjectLastUpdatedBy?.FullName }}
+          </td>
         </tr>
       </ng-template>
 
@@ -103,102 +118,7 @@
   </div>
 </div>
 
-<!-- Dialog -->
-<p-dialog [(visible)]="subjectDialog" [style]="{ width: '650px' }" header="Subject Details" [modal]="true"
-  styleClass="p-fluid bg-white rounded-lg shadow-lg" [breakpoints]="{'960px': '75vw', '640px': '90vw'}"
-  [draggable]="false" [resizable]="false">
-
-  <ng-template pTemplate="header">
-    <div class="flex items-center gap-2 text-xl font-semibold text-gray-800">
-      <i class="pi pi-book"></i>
-      <span>Subject Details</span>
-    </div>
-  </ng-template>
-
-  <ng-template pTemplate="content">
-    <div class="grid grid-cols-1 gap-6 p-4">
-      <!-- Code Field -->
-      <div class="field">
-        <label for="code" class="block text-gray-700 font-medium mb-2">Code</label>
-        <span class="p-input-icon-left w-full">
-          <i class="pi pi-tag"></i>
-          <input type="text" pInputText id="code" [(ngModel)]="subject.Code" class="w-full p-inputtext-sm"
-            placeholder="Enter subject code" required>
-        </span>
-      </div>
-
-      <!-- Name Field -->
-      <div class="field">
-        <label for="name" class="block text-gray-700 font-medium mb-2">Name *</label>
-        <span class="p-input-icon-left w-full">
-          <i class="pi pi-info-circle"></i>
-          <input type="text" pInputText id="name" [(ngModel)]="subject.Name"
-            [ngClass]="{'ng-invalid ng-dirty': submitted && !subject.Name}" class="w-full p-inputtext-sm"
-            placeholder="Enter subject name" required>
-        </span>
-        <small class="p-error block mt-1" *ngIf="submitted && !subject.Name">
-          <i class="pi pi-exclamation-circle mr-1"></i>Name is required
-        </small>
-      </div>
 
 
-      <div class="field">
-        <label for="ProfessorId" class="block text-gray-700 font-medium mb-2">Professor</label>
-        <p-dropdown [options]="professors" [filter]="true" filterBy="FullName" [(ngModel)]="subject.ProfessorId"
-          optionLabel="FullName" placeholder="Select a professor" optionValue="Id" styleClass="w-full p-inputtext-sm"
-          [panelStyleClass]="'text-sm'" [showClear]="true">
-
-        </p-dropdown>
-      </div>
-
-      <!-- Description Field -->
-      <div class="field">
-        <label for="description" class="block text-gray-700 font-medium mb-2">Description </label>
-        <textarea id="description" pInputTextarea [(ngModel)]="subject.Description" rows="4"
-          class="w-full p-inputtext-sm" placeholder="Enter subject description"></textarea>
-      </div>
-
-      <!-- Dates Grid -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-        <!-- Start Date -->
-        <div class="field">
-          <label for="StartDate" class="block text-gray-700 font-medium mb-2">Start Date *</label>
-          <span class="p-input-icon-left w-full">
-            <i class="pi pi-calendar"></i>
-            <input type="date" pInputText id="StartDate" [(ngModel)]="subject.StartDate"
-              [ngClass]="{'ng-invalid ng-dirty': submitted && !subject.StartDate}" class="w-full p-inputtext-sm"
-              required>
-          </span>
-          <small class="p-error block mt-1" *ngIf="submitted && !subject.StartDate">
-            <i class="pi pi-exclamation-circle mr-1"></i>Start Date is required
-          </small>
-        </div>
-
-        <!-- End Date -->
-        <div class="field">
-          <label for="EndDate" class="block text-gray-700 font-medium mb-2">End Date *</label>
-          <span class="p-input-icon-left w-full">
-            <i class="pi pi-calendar"></i>
-            <input type="date" pInputText id="EndDate" [(ngModel)]="subject.EndDate"
-              [ngClass]="{'ng-invalid ng-dirty': submitted && !subject.EndDate}" class="w-full p-inputtext-sm" required>
-          </span>
-          <small class="p-error block mt-1" *ngIf="submitted && !subject.EndDate">
-            <i class="pi pi-exclamation-circle mr-1"></i>End Date is required
-          </small>
-        </div>
-      </div>
-    </div>
-  </ng-template>
-
-  <!-- Dialog Footer -->
-  <ng-template pTemplate="footer">
-    <div class="flex justify-end gap-2 px-4 py-2 bg-gray-50">
-      <p-button label="Cancel" icon="pi pi-times" (click)="hideDialog()" styleClass="p-button-text p-button-secondary">
-      </p-button>
-      <p-button label="Save" icon="pi pi-save" (click)="saveSubject()" styleClass="p-button-success">
-      </p-button>
-    </div>
-  </ng-template>
-</p-dialog>
-
+<app-subject-dialog [subject]="subject" [initializeSubjectList]="initializeSubjectList"></app-subject-dialog>
 <p-confirmDialog [style]="{ width: '450px' }" />

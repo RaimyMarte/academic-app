@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -17,21 +17,22 @@ import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
-import { Subject } from '../../../../types/subject';
+import { TooltipModule } from 'primeng/tooltip';
 import { SubjectService } from '../../../../services/subject/subject.service';
 import { PaginationService } from '../../../../services/ui/pagination.service';
-import { PaginationQuery } from '../../../../types/paginationQuery';
-import { getPageChangeDetails } from '../../../../utils/getPageChangeDetails';
-import { PageChangeEvent } from '../../../../types/pageChangeEvent';
 import { SearchService } from '../../../../services/ui/seach.service';
 import { UserService } from '../../../../services/user/user.service';
-import { User } from '../../../../types/user';
+import { PageChangeEvent } from '../../../../types/pageChangeEvent';
+import { PaginationQuery } from '../../../../types/paginationQuery';
+import { Subject } from '../../../../types/subject';
+import { getPageChangeDetails } from '../../../../utils/getPageChangeDetails';
+import { SubjectDialogComponent } from '../../../components/subject/subject-dialog/subject-dialog.component';
 
 @Component({
   selector: 'app-subjects-list',
   standalone: true,
-  imports: [TableModule, DialogModule, RippleModule, ButtonModule, ToastModule, ToolbarModule, ConfirmDialogModule, InputTextModule, InputTextareaModule, CommonModule, FileUploadModule, DropdownModule, TagModule, RadioButtonModule, RatingModule, InputTextModule, FormsModule, InputNumberModule],
-  providers: [MessageService, ConfirmationService],
+  imports: [TableModule, DialogModule, SubjectDialogComponent, TooltipModule, RippleModule, ButtonModule, ToastModule, ToolbarModule, ConfirmDialogModule, InputTextModule, InputTextareaModule, CommonModule, FileUploadModule, DropdownModule, TagModule, RadioButtonModule, RatingModule, InputTextModule, FormsModule, InputNumberModule],
+  providers: [ConfirmationService],
   templateUrl: './subjects-list.component.html',
   styleUrl: './subjects-list.component.css',
 })
@@ -40,22 +41,17 @@ export class SubjectsListComponent implements OnInit {
 
   subjects!: Partial<Subject>[];
   subject!: Partial<Subject>;
-  selectedSubjects!: Subject[] | null;
-
-  professors: User[] = []
 
   totalSubjects: number = 0;
   searchTerm: string = ''
 
-  submitted: boolean = false;
+  @ViewChild(SubjectDialogComponent) subjectDialogComponent!: SubjectDialogComponent;
 
-  statuses!: any[];
 
-  constructor(private subjectService: SubjectService, private userService: UserService, private messageService: MessageService, private confirmationService: ConfirmationService, public paginationService: PaginationService, private searchService: SearchService) { }
+  constructor(private subjectService: SubjectService, private userService: UserService, private confirmationService: ConfirmationService, public paginationService: PaginationService, private searchService: SearchService) { }
 
   async ngOnInit() {
     this.initializeSubjectList()
-    this.professors = await this.userService.getProfessors();
   }
 
   async initializeSubjectList() {
@@ -96,16 +92,12 @@ export class SubjectsListComponent implements OnInit {
     this.loadSubjects({ currentPage: 1, currentPageSize: rowsPerPage, search: '' });
   }
 
-  openNew() {
-    this.subject = {};
-    this.submitted = false;
-    this.subjectDialog = true;
+  editSubject(subject: Subject) {
+    this.subjectDialogComponent.editSubject(subject)
   }
 
-  editSubject(subject: Subject) {
-    this.subject = { ...subject };
-    console.log(this.subject)
-    this.subjectDialog = true;
+  openNew() {
+    this.subjectDialogComponent.openNew()
   }
 
   deleteSubject(subject: Subject) {
@@ -119,26 +111,5 @@ export class SubjectsListComponent implements OnInit {
         this.subject = {};
       }
     });
-  }
-
-  hideDialog() {
-    this.subjectDialog = false;
-    this.submitted = false;
-  }
-
-  saveSubject() {
-    this.submitted = true;
-
-    if (this.subject.Name?.trim()) {
-      if (this.subject?.Id) {
-        this.subjectService.updateSubject({ body: this.subject, subjectId: this.subject?.Id });
-      } else {
-        this.subjectService.createSubject(this.subject);
-      }
-
-      this.initializeSubjectList()
-      this.subjectDialog = false;
-      this.subject = {};
-    }
   }
 }

@@ -73,9 +73,9 @@ export class SidebarContentComponent {
         visible: this.currentUser?.UserRoleId === 1
       },
       {
-        label: 'Admin Dashboard',
-        icon: 'pi pi-cog',
-        routerLink: '/admin',
+        label: 'Users',
+        icon: 'pi pi-users',
+        routerLink: '/users',
         visible: this.currentUser?.UserRoleId === 1
       }
     ];

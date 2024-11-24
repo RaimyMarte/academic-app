@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UserListComponent } from './user-list.component';
+import { SubjectDialogComponent } from './subject-dialog.component';
 
-describe('UserListComponent', () => {
-  let component: UserListComponent;
-  let fixture: ComponentFixture<UserListComponent>;
+describe('SubjectDialogComponent', () => {
+  let component: SubjectDialogComponent;
+  let fixture: ComponentFixture<SubjectDialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [UserListComponent]
+      imports: [SubjectDialogComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(UserListComponent);
+    fixture = TestBed.createComponent(SubjectDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
