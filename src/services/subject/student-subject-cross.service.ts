@@ -9,6 +9,14 @@ interface SaveSubjectEnrollmentBody {
     NotEnrollStudents: string[];
 }
 
+interface SaveStudentsGradesBody {
+    SubjectId: string;
+    GradesMap: {
+        StudentId: string,
+        Grade: number
+    }[]
+}
+
 @Injectable({
     providedIn: 'root'
 })
@@ -37,4 +45,7 @@ export class StudentSubjectCrossService {
         await this.apiService.post('/save_subject_enrollment', body, this.authService.authHeader());
     }
 
+    async saveStudentsGrades(body: SaveStudentsGradesBody) {
+        await this.apiService.post('/save_students_grades', body, this.authService.authHeader());
+    }
 }

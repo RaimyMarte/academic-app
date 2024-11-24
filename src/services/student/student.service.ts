@@ -38,13 +38,6 @@ export class StudentService {
         };
     }
 
-    async getStudentsDropdown() {
-        const response = await this.apiService.get('/student_dropdown', this.authService.authHeader());
-        const students = response?.data as Student[];
-
-        return students;
-    }
-
     async getStudentById(studentId: string) {
         const response = await this.apiService.get(`/student_by_id/${studentId}`, this.authService.authHeader());
         const student = response?.data as Student;
