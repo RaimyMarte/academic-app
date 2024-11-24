@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output, signal } from '@angular/core';
+import { Component, EventEmitter, Output, signal } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputNumberModule } from 'primeng/inputnumber';
@@ -48,7 +49,7 @@ export class StudentFilterComponent {
   submitted: boolean = false;
   nationalities: Maintenance[] = []
 
-  constructor(private maintenanceService: MaintenanceService,) { }
+  constructor(private maintenanceService: MaintenanceService, private router: Router,private route: ActivatedRoute,) { }
 
   async ngOnInit() {
     const selectedMaintenances = ['Nationality']
@@ -64,7 +65,13 @@ export class StudentFilterComponent {
     this.studentFilterForm().reset();
 
     const formData = this.studentFilterForm().value
-    this.filterApplied.emit(formData); 
+    this.filterApplied.emit(formData);
+
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: formData,
+      queryParamsHandling: 'merge',
+    });
 
     this.studentFilterSidebar = false;
   }
@@ -80,7 +87,14 @@ export class StudentFilterComponent {
 
     if (this.studentFilterForm().valid) {
       const formData = this.studentFilterForm().value
-      this.filterApplied.emit(formData); 
+
+      this.router.navigate([], {
+        relativeTo: this.route,
+        queryParams: formData,
+        queryParamsHandling: 'merge',
+      });
+
+      this.filterApplied.emit(formData);
       this.hideFilterSidebar();
     }
   }

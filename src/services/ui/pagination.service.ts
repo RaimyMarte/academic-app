@@ -22,11 +22,11 @@ export class PaginationService {
   }
 
   getCurrentPage(): number {
-    return this.currentPage;
+    return this.currentPage || 1;
   }
 
   getItemsPerPage(): number {
-    return this.itemsPerPage;
+    return this.itemsPerPage || 10;
   }
 
 

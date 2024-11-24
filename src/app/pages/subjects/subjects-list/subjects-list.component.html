@@ -9,8 +9,8 @@
   <!-- Toolbar -->
   <p-toolbar styleClass="mb-6 shadow-lg bg-white rounded-lg border-none">
     <ng-template pTemplate="left">
-      <p-button severity="primary" label="New Subject" icon="pi pi-plus" class="mr-4 shadow-md hover:shadow-lg"
-        (onClick)="openNew()"></p-button>
+      <p-button [disabled]="currentUserRole != 1" severity="primary" label="New Subject" icon="pi pi-plus"
+        class="mr-4 shadow-md hover:shadow-lg" (onClick)="openNew()"></p-button>
     </ng-template>
   </p-toolbar>
 
@@ -85,14 +85,14 @@
               " severity="help" [rounded]="true" [text]="true"
                 [routerLink]="['/subjects/grades', subject?.Id]"></p-button>
 
-              <p-button pTooltip="Enroll Students" icon="pi pi-users" severity="primary" [rounded]="true" [text]="true"
-                [routerLink]="['/subjects/enroll', subject?.Id]"></p-button>
+              <p-button *ngIf="currentUserRole == 1" pTooltip="Enroll Students" icon="pi pi-users" severity="primary"
+                [rounded]="true" [text]="true" [routerLink]="['/subjects/enroll', subject?.Id]"></p-button>
 
-              <p-button pTooltip="Edit subject" icon="pi pi-pencil" severity="success" [rounded]="true" [text]="true"
-                (onClick)="editSubject(subject)"></p-button>
+              <p-button *ngIf="currentUserRole == 1" pTooltip="Edit subject" icon="pi pi-pencil" severity="success"
+                [rounded]="true" [text]="true" (onClick)="editSubject(subject)"></p-button>
 
-              <p-button pTooltip="Delete subject" icon="pi pi-trash" severity="danger" [rounded]="true" [text]="true"
-                (onClick)="deleteSubject(subject)"></p-button>
+              <p-button *ngIf="currentUserRole == 1" pTooltip="Delete subject" icon="pi pi-trash" severity="danger"
+                [rounded]="true" [text]="true" (onClick)="deleteSubject(subject)"></p-button>
             </div>
           </td>
           <td class="font-medium text-gray-700">{{ subject?.Code }}</td>

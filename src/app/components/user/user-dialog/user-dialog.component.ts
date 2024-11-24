@@ -104,6 +104,7 @@ export class UserDialogComponent implements OnInit {
       Email: user.Email || '',
       Phone: user.Phone || '',
       Authorized: user.Authorized || false,
+      ChangePwdNextLogin: user.ChangePwdNextLogin || false,
     });
 
     this.updateMode = true
@@ -111,7 +112,6 @@ export class UserDialogComponent implements OnInit {
   }
 
   hideDialog() {
-    this.userDialog = false;
     this.submitted = false;
     this.user = {};
     this.userForm().reset();
@@ -119,6 +119,7 @@ export class UserDialogComponent implements OnInit {
     this.updateMode = false
     this.createMode = false
     this.resetPasswordMode = false
+    this.userDialog = false;
   }
 
   saveUser() {
@@ -132,7 +133,6 @@ export class UserDialogComponent implements OnInit {
       }
 
       else if (this.resetPasswordMode) {
-
         this.userService.adminResetPassword({ userId: this.user?.Id, ...formData });
       }
       else {

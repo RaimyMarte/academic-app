@@ -22,6 +22,7 @@ import { Subject } from '../../../../types/subject';
 import { getPageChangeDetails } from '../../../../utils/getPageChangeDetails';
 import { SubjectDialogComponent } from '../../../components/subject/subject-dialog/subject-dialog.component';
 import { RouterModule } from '@angular/router';
+import { AuthService } from '../../../../services/auth/auth.service';
 
 @Component({
   selector: 'app-subjects-list',
@@ -32,6 +33,7 @@ import { RouterModule } from '@angular/router';
   styleUrl: './subjects-list.component.css',
 })
 export class SubjectsListComponent implements OnInit {
+  currentUserRole: number = 0;
   subjectDialog: boolean = false;
 
   subjects!: Partial<Subject>[];
@@ -42,9 +44,11 @@ export class SubjectsListComponent implements OnInit {
 
   @ViewChild(SubjectDialogComponent) subjectDialogComponent!: SubjectDialogComponent;
 
-  constructor(private subjectService: SubjectService, private confirmationService: ConfirmationService, public paginationService: PaginationService, private searchService: SearchService) { }
+  constructor(private authService: AuthService, private subjectService: SubjectService, private confirmationService: ConfirmationService, public paginationService: PaginationService, private searchService: SearchService) { }
 
   async ngOnInit() {
+    const currentUser = this.authService.currentUserValue;
+    this.currentUserRole = currentUser?.UserRoleId || 0
     this.initializeSubjectList()
   }
 
@@ -99,8 +103,8 @@ export class SubjectsListComponent implements OnInit {
       message: 'Are you sure you want to delete ' + subject?.Name + '?',
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
-      acceptButtonStyleClass:"p-button-primary",
-      rejectButtonStyleClass:"p-button-secondary p-button-text",
+      acceptButtonStyleClass: "p-button-primary",
+      rejectButtonStyleClass: "p-button-secondary p-button-text",
       accept: () => {
         this.subjectService.deleteSubject(subject?.Id);
         this.initializeSubjectList()
