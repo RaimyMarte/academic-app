@@ -1,5 +1,5 @@
 <div class="relative max-w-7xl mx-auto p-6 bg-white shadow-lg">
-    <!-- Enhanced Header Section -->
+    <!-- Header Section -->
     <div class="mb-8">
         <div class="flex items-center justify-between">
             <div>
@@ -46,7 +46,7 @@
         </div>
     </div>
 
-    <!-- Enhanced PickList -->
+    <!-- PickList -->
     <div class="bg-gray-50 p-6 rounded-xl">
         <p-pickList [source]="notEnrolledStudents" [target]="enrolledStudents" sourceHeader="Available Students"
             targetHeader="Currently Enrolled" [dragdrop]="true" [responsive]="true" [sourceStyle]="{ height: '32rem' }"
@@ -83,7 +83,7 @@
         </p-pickList>
     </div>
 
-    <!-- Enhanced FAB -->
+    <!-- FAB -->
     <div class="fixed bottom-8 right-8 flex flex-col gap-4">
         <p-button icon="pi pi-save" (onClick)="saveChanges()"
             styleClass="p-button-rounded p-button-lg p-button-success shadow-xl hover:scale-105 transition-transform"
@@ -95,4 +95,4 @@
     </div>
 </div>
 
-<p-confirmDialog [style]="{ width: '450px' }"  />
+<p-confirmDialog [style]="{ width: '450px' }" />

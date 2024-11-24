@@ -13,11 +13,12 @@ import { SubjectAttendanceService } from '../../../../services/subject/subject-a
 import { SubjectService } from '../../../../services/subject/subject.service';
 import { Student } from '../../../../types/student';
 import { Subject } from '../../../../types/subject';
+import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
   selector: 'app-subject-attendance',
   standalone: true,
-  imports: [PickListModule, AvatarModule, ButtonModule, FormsModule, ConfirmDialogModule, CommonModule, TagModule, TooltipModule,],
+  imports: [PickListModule, AvatarModule, InputTextModule, ButtonModule, FormsModule, ConfirmDialogModule, CommonModule, TagModule, TooltipModule,],
   providers: [ConfirmationService],
   templateUrl: './subject-attendance.component.html',
   styleUrl: './subject-attendance.component.css'
@@ -35,10 +36,9 @@ export class SubjectAttendanceComponent implements OnInit {
 
   async ngOnInit() {
     this.subjectId = this.route.snapshot.paramMap.get('subjectId');
-
     this.subject = await this.subjectService.getSubject(this.subjectId || '');
-    console.log(this.selectedDate)
-    const data: any = await this.subjectAttendanceService.getSubjectAttendance(this.subjectId || '', this.selectedDate)
+
+    const data = await this.subjectAttendanceService.getSubjectAttendance(this.subjectId || '', this.selectedDate)
     this.presentStudents = data?.presentStudents
     this.absentStudents = data?.absentStudents
   }
@@ -56,7 +56,7 @@ export class SubjectAttendanceComponent implements OnInit {
 
         this.subjectAttendanceService.saveSubjectAttendance({
           Date: this.selectedDate,
-          SubjectId: this.subjectId|| '',
+          SubjectId: this.subjectId || '',
           PresentStudents: presentStudentsIds,
           AbsentStudents: absentStudentsIds
         });

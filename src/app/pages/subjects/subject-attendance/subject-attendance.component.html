@@ -1,5 +1,5 @@
 <div class="relative max-w-7xl mx-auto p-6 bg-white shadow-lg">
-    <!-- Enhanced Header Section -->
+    <!-- Header Section -->
     <div class="mb-8">
         <div class="flex items-center justify-between">
             <div>
@@ -14,12 +14,12 @@
             </div>
 
             <p-tag [severity]="subject?.Enabled ? 'success' : 'danger'"
-            [value]="subject?.Enabled ? 'Active Subject' : 'Inactive Subject'" icon="pi pi-clock">
-        </p-tag>
-
-
+                [value]="subject?.Enabled ? 'Enabled' : 'Disabled'" icon="pi pi-clock"
+                class="text-sm sm:text-base p-2 sm:p-3 rounded-lg ml-auto">
+            </p-tag>
         </div>
     </div>
+
 
     <!-- Stats Banner -->
     <div class="grid grid-cols-2 gap-4 mb-6">
@@ -47,8 +47,15 @@
         </div>
     </div>
 
-    <!-- Enhanced PickList -->
+    <!-- PickList -->
     <div class="bg-gray-50 p-6 rounded-xl">
+        <div class="flex items-center gap-4 mb-6 pl-3">
+            <label for="attendance-date" class="text-gray-800 font-semibold text-lg">Attendance Date:</label>
+            <input id="attendance-date" pInputText type="date" [(ngModel)]="selectedDate"
+                class="p-3 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 text-gray-800 transition-all duration-200 focus:outline-none"
+                [pTooltip]="'Select Attendance Date'" tooltipPosition="top" />
+        </div>
+
         <p-pickList [source]="presentStudents" [target]="absentStudents" sourceHeader="Available Students"
             targetHeader="Currently Enrolled" [dragdrop]="true" [responsive]="true" [sourceStyle]="{ height: '32rem' }"
             [targetStyle]="{ height: '32rem' }" filterBy="FullName"
@@ -84,7 +91,7 @@
         </p-pickList>
     </div>
 
-    <!-- Enhanced FAB -->
+    <!-- FAB -->
     <div class="fixed bottom-8 right-8 flex flex-col gap-4">
         <p-button icon="pi pi-save" (onClick)="saveChanges()"
             styleClass="p-button-rounded p-button-lg p-button-success shadow-xl hover:scale-105 transition-transform"
@@ -96,4 +103,4 @@
     </div>
 </div>
 
-<p-confirmDialog [style]="{ width: '450px' }"  />
+<p-confirmDialog [style]="{ width: '450px' }" />

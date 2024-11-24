@@ -27,7 +27,7 @@ export class SubjectAttendanceService {
 
     async getSubjectAttendance(subjectId: string, date: string) {
         const response = await this.apiService.get(`/subject_get_attendance/${subjectId}?date=${date}`, this.authService.authHeader());
-        const data = response?.data as GetSubjectAttendance[];
+        const data = response?.data as GetSubjectAttendance;
 
         return data
     }
