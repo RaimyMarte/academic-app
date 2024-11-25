@@ -1,17 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '../services/auth/auth.guard';
-import { HomeComponent } from './pages/home/home.component';
 import { NonAuthGuard } from './non-auth.guard';
 import { LoginComponent } from './pages/auth/login/login.component';
-import { ProfessorDashboardComponent } from './pages/professor-dashboard/professor-dashboard.component';
 import { StudentsListComponent } from './pages/student/student-list/student-list.component';
 import { StudentSubjectPickListComponent } from './pages/subjects/student-subject-pick-list/student-subject-pick-list.component';
+import { StudentsGradesComponent } from './pages/subjects/students-grades/students-grades.component';
+import { SubjectAttendanceComponent } from './pages/subjects/subject-attendance/subject-attendance.component';
 import { SubjectsListComponent } from './pages/subjects/subjects-list/subjects-list.component';
 import { UserListComponent } from './pages/user/user-list/user-list.component';
 import { LayoutComponent } from './ui/layout/layout.component';
-import { SubjectAttendanceComponent } from './pages/subjects/subject-attendance/subject-attendance.component';
-import { StudentsGradesComponent } from './pages/subjects/students-grades/students-grades.component';
+import { HomeComponent } from './pages/home/home/home.component';
 
 export const routes: Routes = [
   {
@@ -22,12 +21,6 @@ export const routes: Routes = [
         path: '',
         component: HomeComponent,
         canActivate: [AuthGuard]
-      },
-      {
-        path: 'professor',
-        component: ProfessorDashboardComponent,
-        canActivate: [AuthGuard],
-        // data: { roles: ['professor'] }
       },
       {
         path: 'subjects',

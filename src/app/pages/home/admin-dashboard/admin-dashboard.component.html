@@ -1,0 +1,38 @@
+<div class="container mx-auto p-6">
+  <div class="grid grid-cols-1 gap-6">
+    <!-- Welcome Section -->
+    <div class="bg-white shadow-lg rounded-lg p-6">
+      <div class="flex items-center justify-between">
+        <div>
+          <h1 class="text-3xl font-bold text-gray-800">Admin Dashboard</h1>
+          <p class="text-gray-600 mt-2">School Management System</p>
+        </div>
+        <p-avatar 
+          icon="pi pi-user-edit" 
+          size="large" 
+          styleClass="bg-green-500 text-white"
+        ></p-avatar>
+      </div>
+    </div>
+
+    <!-- System Statistics -->
+    <div class="bg-white shadow-lg rounded-lg p-6">
+      <h2 class="text-xl font-semibold mb-4">System Overview</h2>
+      <div class="grid md:grid-cols-4 gap-4">
+        <div *ngFor="let stat of systemStats" class="bg-gray-50 p-4 rounded-lg">
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="flex items-center gap-2">
+                <i [class]="stat.icon + ' text-xl ' + stat.color"></i>
+                <h3 class="text-sm font-medium text-gray-600">{{ stat.label }}</h3>
+              </div>
+              <p class="text-2xl font-bold text-gray-800 mt-2">
+                {{ stat.value | number }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
