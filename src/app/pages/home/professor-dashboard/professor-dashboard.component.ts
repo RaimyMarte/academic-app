@@ -27,7 +27,7 @@ export class ProfessorDashboardComponent implements OnInit {
 
   async ngOnInit() {
     const statsValues = await this.statsService.getProfessorStats();
-console.log(statsValues)
+
     this.subjectStats = statsValues?.map((subject: any) => ({
       name: subject?.name,
       enrolledStudents: subject?.enrolledStudents,
